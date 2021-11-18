@@ -119,12 +119,16 @@ def checkDab(image, results, draw=False, display=False):
     euclidean_distance_left = int(hypot(left_elbow_landmark[0] - nose_landmark[0],
                                 left_elbow_landmark[1] - nose_landmark[1]))
 
+    #calculate the euclidean distance between the right elbow and nose
+    euclidean_distance_right = int(hypot(right_elbow_landmark[0] - nose_landmark[0],
+                                right_elbow_landmark[1] - nose_landmark[1]))
+
     #calculate the distance between wrists
     wrist_distance = int(abs(left_y_wrist - right_y_wrist))
 
     #To get a dabbing pose, we need one of the wrists to be a greater height than the other
     #and the nose to be close to an elbow
-    if wrist_distance > 50:
+    if wrist_distance > 50 and (euclidean_distance_left < 200 or euclidean_distance_right < 200):
 
         #set the dab value to true
         person_dab = 'DABBING'
