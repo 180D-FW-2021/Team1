@@ -69,9 +69,14 @@ Dont use the above values, these are just an example.
 '''
 ############### END Calibration offsets #################
 
+
+###############FLAGS FOR PERSONAL USE################
+
+#gyroscope flags for calculating stuff
 counter_gyro = 0
 first_ten_flag = 0
 
+#gesture flags to prevent overlap
 just_flicked_left_flag = 0
 just_flicked_right_flag = 0
 just_flicked_up_flag = 0
@@ -79,6 +84,7 @@ just_flicked_down_flag = 0
 just_turned_left_flag = 0
 just_turned_right_flag = 0
 
+#counters for gestures to prevent overlap
 counter_flicked_left = 0
 counter_flicked_right = 0
 counter_flicked_up = 0
@@ -86,6 +92,7 @@ counter_flicked_down = 0
 counter_turned_left = 0
 counter_turned_right = 0
 
+#counters for gestures being sent over MQTT
 FL_detection_counter = 0
 FR_detection_counter = 0
 FU_detection_counter = 0
@@ -93,7 +100,7 @@ FD_detection_counter = 0
 TL_detection_counter = 0
 TR_detection_counter = 0
 
-
+#MQTT flag/counter
 mqtt_send_flag = 0
 mqtt_counter = 0
 
@@ -425,25 +432,13 @@ while True:
 
 ###########################LEFT/RIGHT TURNS#############################
 
-    #detect left/right turns
-    if (AccYangle > 70):
-        TL_detection_counter = TL_detection_counter + 1
-        outputString += "LEFT TURN DETECTED!\t"
-        just_turned_left_flag = 1
-        if (TL_detection_counter >= 3):
-            mqtt_send_flag = 1
-    if(AccYangle < -70):
-        TR_detection_counter = TR_detection_counter + 1
-        outputString += "RIGHT TURN DETECTED!\t"
-        just_turned_right_flag = 1
-        if (TR_detection_counter >= 3):
-            mqtt_send_flag = 1
-
+    #increment counters
     if(just_turned_left_flag):
         counter_turned_left = counter_turned_left + 1
     if(just_turned_right_flag):
         counter_turned_right = counter_turned_right + 1
 
+    #reset counters and flags 
     if(counter_turned_left >= 15):
         counter_turned_left = 0
         TL_detection_counter = 0
@@ -455,13 +450,14 @@ while True:
 
 ##########################FLICKING LEFT/RIGHT##########################
 
-    #flags/counters for flicking left/right
+    #increment counters
     if(just_flicked_right_flag): #make counters to see how long it's been since we first detected a flick
         counter_flicked_right = counter_flicked_right + 1
     if(just_flicked_left_flag):
         counter_flicked_left = counter_flicked_left + 1
         #print(counter_flicked_left)
 
+    #reset counters and flags
     if(counter_flicked_right == 15):
         just_flicked_right_flag = 0 #reset flag so that we can flick left again
         counter_flicked_right = 0
@@ -473,11 +469,13 @@ while True:
 
 #########################FLICKING UP/DOWN############################
 
+    #increment counters
     if(just_flicked_up_flag): #make counters to see how long it's been since we first detected a flick
         counter_flicked_up = counter_flicked_up + 1
     if(just_flicked_down_flag):
         counter_flicked_down = counter_flicked_down + 1
 
+    #reset counters and flags
     if(counter_flicked_up == 50): #high counter here since nobody is trying to turn a tv on then immediately off again, and vice versa
         just_flicked_up_flag = 0 #reset so that we can flick down again
         counter_flicked_up = 0
@@ -489,6 +487,7 @@ while True:
 
 #########################GYROSCOPE READINGS#########################
 
+    #use past 10 values to find differences to do a mock derivative
     #flags/counters for flicking left/right (gyroscope readings)
     if(first_ten_flag == 0):
         counter_array_gyro_z = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -512,13 +511,21 @@ while True:
         #print(gyroZangle)
         difference_gyro_Z = gyroZangle - counter_array_gyro_z[counter_gyro]
         difference_gyro_X = gyroXangle - counter_array_gyro_x[counter_gyro]
-        #counter_array_fp[counter] = gyroZangle
-        #print(difference_gyro_Z)
-    #    if(difference_gyro_Z > 5):
-     #       outputString += "FORWARD PUSH DETECTED!"
 
-#    if(CFangleX < -45):
-#        outputString += "\tUPWARD LIFT DETECTED!"
+#############################LEFT/RIGHT TURN OUTPUTS###########################
+    #detect left/right turns
+    if (AccYangle > 70):
+        TL_detection_counter = TL_detection_counter + 1
+        outputString += "LEFT TURN DETECTED!\t"
+        just_turned_left_flag = 1
+        if (TL_detection_counter >= 3):
+            mqtt_send_flag = 1
+    if(AccYangle < -70):
+        TR_detection_counter = TR_detection_counter + 1
+        outputString += "RIGHT TURN DETECTED!\t"
+        just_turned_right_flag = 1
+        if (TR_detection_counter >= 3):
+            mqtt_send_flag = 1
 
 
 #############################FLICKING OUTPUTS###########################
@@ -561,9 +568,9 @@ while True:
         outputString += "\tMQTT SEND FLAG ON!"
         if (mqtt_counter == 0): #first time
             #send mqtt thing
-            if 1:
+            if 1: #debugging to see if MQTT should be sent (replace later with actual MQTT code)
                 outputString += "\tSEND MQTT"
-            if 0:
+            if 0: #debugging with what was detected
                 outputString += "\nTL_detection_counter: %5.2f" % TL_detection_counter
                 outputString += "\nTR_detection_counter: %5.2f" % TR_detection_counter
                 outputString += "\nFL_detection_counter: %5.2f" % FL_detection_counter
@@ -571,7 +578,7 @@ while True:
                 outputString += "\nFD_detection_counter: %5.2f" % FD_detection_counter
                 outputString += "\nFU_detection_counter: %5.2f" % FU_detection_counter
                 outputString += "\n"
-            if(TL_detection_counter >= 3):
+            if(TL_detection_counter >= 3): #do actual MQTT sends within these to prevent sending too often
                 outputString += "\tSEND \"TURN LEFT\" MQTT SIGNAL"
                 #TL_detection_counter = 0
                 #TR_detection_counter = 0 
@@ -589,13 +596,16 @@ while True:
                 outputString += ""
             #mqtt_counter = 0 #placeholder line
 
+        #increment counters
         mqtt_counter = mqtt_counter + 1
+        
+        #reset counters/flags
         if (mqtt_counter >= 15): #wait at least 15 cycles to reset ability to send mqtt messages
             mqtt_counter = 0
             mqtt_send_flag = 0
 
 
-###########################DEBUGGING INFORMATION######################
+###########################DEBUGGING SENSORS INFORMATION######################
 
     if 0:                       #Change to '0' to stop showing the angles from the accelerometer
         outputString += "\t# ACCX Angle %5.2f ACCY Angle %5.2f  #  " % (AccXangle, AccYangle)
