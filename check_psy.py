@@ -120,10 +120,45 @@ def check_psy(landmarks, output_image, display=False):
     #the color of the label, which will be red
     color = (0,0,255)
 
-    #calculate the required angles
-    #for this pose specifically we require landmakrs
-    #for the wrist, elbow, and shoulder
+    # Get the angle between the left shoulder, elbow and wrist points. 
+    left_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
+                                      landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
+                                      landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
 
+    # Get the angle between the right shoulder, elbow and wrist points. 
+    right_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
+                                       landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value],
+                                       landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value])
+
+    #after getting the angle values, we now compare them to values we need to make the pose
+    #to get the angle values are kinda jank
+    #the left_side works fine, but the right needs to get the absolute value of 360 - the value we want
+    #for this instance we want roughly 90 degrees for both 
+    if left_elbow_angle < 110 and left_elbow_angle > 70 and right_elbow_angle < 290 and right_elbow_angle > 250:
+        label = 'PSY style'
+
+    print(right_elbow_angle)
+    print(left_elbow_angle)
+    #check if label has been clarified successfully
+    if label != 'No Pose Detected':
+
+        #update the color to green
+        color = (0,255,0)
+
+    #write the label to the output image
+    cv2.putText(output_image, label, (10, 30),cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
+    
+    # Check if the resultant image is specified to be displayed.
+    if display:
+    
+        # Display the resultant image.
+        plt.figure(figsize=[10,10])
+        plt.imshow(output_image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
+        
+    else:
+        
+        # Return the output image and the classified label.
+        return output_image, label
 
 
 # Initializing mediapipe pose class.
@@ -140,3 +175,52 @@ pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5,
 
 # Initialize the VideoCapture object to read from the webcam.
 camera_video = cv2.VideoCapture(0)
+
+# Initialize a resizable window.
+cv2.namedWindow('Gangnam Style', cv2.WINDOW_NORMAL)
+
+# Iterate until the webcam is accessed successfully.
+while camera_video.isOpened():
+    
+    # Read a frame.
+    ok, frame = camera_video.read()
+    
+    # Check if frame is not read properly.
+    if not ok:
+        
+        # Continue to the next iteration to read the next frame and ignore the empty camera frame.
+        continue
+    
+    # Flip the frame horizontally for natural (selfie-view) visualization.
+    frame = cv2.flip(frame, 1)
+    
+    # Get the width and height of the frame
+    frame_height, frame_width, _ =  frame.shape
+    
+    # Resize the frame while keeping the aspect ratio.
+    frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
+    
+    # Perform Pose landmark detection.
+    frame, landmarks = detectPose(frame, pose_video, display=False)
+    
+    # Check if the landmarks are detected.
+    if landmarks:
+        
+        # Perform the Pose Classification.
+        frame, _ = check_psy(landmarks, frame, display=False)
+    
+    # Display the frame.
+    cv2.imshow('Psy Style', frame)
+    
+    # Wait until a key is pressed.
+    # Retreive the ASCII code of the key pressed
+    k = cv2.waitKey(1) & 0xFF
+    
+    # Check if 'ESC' is pressed.
+    if(k == 27):
+        
+        # Break the loop.
+        break
+ 
+# Release the VideoCapture object and close the windows.
+camera_video.release()
