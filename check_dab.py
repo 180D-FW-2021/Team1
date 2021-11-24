@@ -170,7 +170,7 @@ camera_video.set(3,1280)
 camera_video.set(4,960)
 
 # Create named window for resizing purposes.
-cv2.namedWindow('Dabbing?', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Dab Detection', cv2.WINDOW_NORMAL)
 
 #iterate until the webcam is accessed successfully
 while camera_video.isOpened():
