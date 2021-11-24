@@ -4,6 +4,8 @@
 #the arms must be straight at a 180 degree
 
 import cv2
+import math
+import numpy as np
 import pyautogui
 from time import time
 from math import hypot
@@ -23,6 +25,56 @@ pose_video = mp_pose.Pose(static_image_mode=False, model_complexity=1, min_detec
 
 # Initialize mediapipe drawing class.
 mp_drawing = mp.solutions.drawing_utils 
+
+
+def calculateAngle(landmark1, landmark2, landmark3):
+    '''
+    This function calculates angle between three different landmarks.
+    Args:
+        landmark1: The first landmark containing the x,y and z coordinates.
+        landmark2: The second landmark containing the x,y and z coordinates.
+        landmark3: The third landmark containing the x,y and z coordinates.
+    Returns:
+        angle: The calculated angle between the three landmarks.
+ 
+    '''
+ 
+    # Get the required landmarks coordinates.
+    x1, y1, _ = landmark1
+    x2, y2, _ = landmark2
+    x3, y3, _ = landmark3
+ 
+    # Calculate the angle between the three points
+    angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
+    
+    # Check if the angle is less than zero.
+    if angle < 0:
+ 
+        # Add 360 to the found angle.
+        angle += 360
+    
+    # Return the calculated angle.
+    return angle
+
+def classifyPose(landmakrs, output_image, display = False):
+    '''
+    This function classifies yoga poses depending on the angles of various body joints
+    Args:
+        landmakrs: a list of detected landmarks of the person whose pose needs to be classified
+        output_image: an image of the the person with the detected pose landmakrs drawn
+        display: a boolean value that is if set to true the function displays the resultant image with the pose label
+        writeen on it and returns nothing
+    Returns:
+        output_image: the image with the detected pose landmarks drawn and pose label written
+        label: the classified pose label of the person in the output_image
+    '''
+
+
+
+
+
+
+
 
 def detectPose(image, pose, draw=False, display=False):
     '''
@@ -72,18 +124,6 @@ def detectPose(image, pose, draw=False, display=False):
         # Return the output image and the results of pose landmarks detection.
         return output_image, results
 
-def checkTpose(image, results, draw=False, display=False):
-    '''
-    This function checks whether or not the user is doing a T-Pose 
-    By checking the position of the arms and the rigidity of them
-    Args:
-        image: the input image with a prominent person whose dab pose needs to be found
-        results: the output of the pose landmakrs detection on the input image
-        draw: a boolean value that is if set to true the function writes the horizontal position on the output image
-        display: a boolean value that is if set to true the function displays the resultant image and returns nothing
-    Outputs:
-        output_image: the same input image but with a tpose value check 
-        tpose_status: the classified status of a user in a t-pose or not
-    '''
+angle = calculateAngle((558, 326, 0),(642, 333,0),(718, 321,0))
 
-    
+print(f'The calculated angle is {angle}')
