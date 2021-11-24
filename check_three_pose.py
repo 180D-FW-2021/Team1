@@ -5,35 +5,6 @@ from time import time
 import mediapipe as mp
 import matplotlib.pyplot as plt
 
-def calculateAngle(landmark1, landmark2, landmark3):
-    '''
-    This function calculates angle between three different landmarks.
-    Args:
-        landmark1: The first landmark containing the x,y and z coordinates.
-        landmark2: The second landmark containing the x,y and z coordinates.
-        landmark3: The third landmark containing the x,y and z coordinates.
-    Returns:
-        angle: The calculated angle between the three landmarks.
- 
-    '''
- 
-    # Get the required landmarks coordinates.
-    x1, y1, _ = landmark1
-    x2, y2, _ = landmark2
-    x3, y3, _ = landmark3
- 
-    # Calculate the angle between the three points
-    angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
-    
-    # Check if the angle is less than zero.
-    if angle < 0:
- 
-        # Add 360 to the found angle.
-        angle += 360
-    
-    # Return the calculated angle.
-    return angle
-
 def detectPose(image, pose, display=True):
     '''
     This function performs pose detection on an image.
@@ -92,6 +63,35 @@ def detectPose(image, pose, display=True):
         
         # Return the output image and the found landmarks.
         return output_image, landmarks
+
+def calculateAngle(landmark1, landmark2, landmark3):
+    '''
+    This function calculates angle between three different landmarks.
+    Args:
+        landmark1: The first landmark containing the x,y and z coordinates.
+        landmark2: The second landmark containing the x,y and z coordinates.
+        landmark3: The third landmark containing the x,y and z coordinates.
+    Returns:
+        angle: The calculated angle between the three landmarks.
+ 
+    '''
+ 
+    # Get the required landmarks coordinates.
+    x1, y1, _ = landmark1
+    x2, y2, _ = landmark2
+    x3, y3, _ = landmark3
+ 
+    # Calculate the angle between the three points
+    angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
+    
+    # Check if the angle is less than zero.
+    if angle < 0:
+ 
+        # Add 360 to the found angle.
+        angle += 360
+    
+    # Return the calculated angle.
+    return angle
 
 def classifyPose(landmarks, output_image, display=False):
     '''
@@ -218,6 +218,7 @@ def classifyPose(landmarks, output_image, display=False):
         # Return the output image and the classified label.
         return output_image, label
 
+
 # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
  
@@ -227,13 +228,15 @@ pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_
 # Initializing mediapipe drawing class, useful for annotation.
 mp_drawing = mp.solutions.drawing_utils
 
+#setup pose function for video
+pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
 
 # Initialize the VideoCapture object to read from the webcam.
 camera_video = cv2.VideoCapture(0)
-
+ 
 # Initialize a resizable window.
 cv2.namedWindow('Pose Classification', cv2.WINDOW_NORMAL)
-
+ 
 # Iterate until the webcam is accessed successfully.
 while camera_video.isOpened():
     
@@ -256,7 +259,7 @@ while camera_video.isOpened():
     frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
     
     # Perform Pose landmark detection.
-    frame, landmarks = detectPose(frame, camera_video, display=False)
+    frame, landmarks = detectPose(frame, pose_video, display=False)
     
     # Check if the landmarks are detected.
     if landmarks:
@@ -276,7 +279,6 @@ while camera_video.isOpened():
         
         # Break the loop.
         break
-
+ 
 # Release the VideoCapture object and close the windows.
 camera_video.release()
-cv2.destroyAllWindows()
