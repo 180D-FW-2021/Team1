@@ -6,7 +6,7 @@ import time
 
 class mqttCommunicator:
 
-    topic = 'airpower'
+    topic = 'ece180d/team1'
 
     def __init__(self, server : str, actionTable: dict): #action table is a string -> function dictionary
         self.actionTable = actionTable
@@ -21,6 +21,7 @@ class mqttCommunicator:
     #debugging/logging function
     def on_connect(self, client, userdata, flags, rc):
         print("Connection returned result: "+str(rc))
+        self.client.subscribe(self.topic, qos=1)
    
    
     #debugging/logging function
@@ -35,6 +36,7 @@ class mqttCommunicator:
     def on_message(self, client, userdata, message):
         #TODO: verify topic is correct
         decodedMessage = json.loads(message.payload)
+        print("Received" + str(message.payload))
         if "command" in decodedMessage:
             command = decodedMessage["command"]
         else:
