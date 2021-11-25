@@ -137,8 +137,6 @@ def check_psy(landmarks, output_image, display=False):
     if left_elbow_angle < 110 and left_elbow_angle > 70 and right_elbow_angle < 290 and right_elbow_angle > 250:
         label = 'PSY style'
 
-    print(right_elbow_angle)
-    print(left_elbow_angle)
     #check if label has been clarified successfully
     if label != 'No Pose Detected':
 
