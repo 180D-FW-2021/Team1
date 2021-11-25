@@ -225,7 +225,7 @@ pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_
 mp_drawing = mp.solutions.drawing_utils
 
 #setup pose function for video
-pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
+pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, model_complexity=1)
 
 # Initialize the VideoCapture object to read from the webcam.
 camera_video = cv2.VideoCapture(0)
