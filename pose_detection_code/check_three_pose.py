@@ -55,9 +55,6 @@ def detectPose(image, pose, display=True):
         plt.subplot(121);plt.imshow(image[:,:,::-1]);plt.title("Original Image");plt.axis('off');
         plt.subplot(122);plt.imshow(output_image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
         
-        # Also Plot the Pose landmarks in 3D.
-        mp_drawing.plot_landmarks(results.pose_world_landmarks, mp_pose.POSE_CONNECTIONS)
-        
     # Otherwise
     else:
         

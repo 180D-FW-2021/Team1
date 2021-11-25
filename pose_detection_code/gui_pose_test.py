@@ -8,6 +8,7 @@ from time import time
 from math import hypot
 import mediapipe as mp
 import matplotlib.pyplot as plt
+import webbrowser
 
 # Initialize mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -134,7 +135,7 @@ def checkDab(image, results, draw=False, display=False):
         color = (0,255,0)
 
         #if there is a dab, then print out a window that states there has been a dab
-        messagebox.showinfo("Dab", "You have done a DAB!")
+        webbrowser.open('https://www.youtube.com/watch?v=nOj_A3aZxGs')
 
     #otherwise
     else:
