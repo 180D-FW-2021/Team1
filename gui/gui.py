@@ -27,4 +27,6 @@ customize_button = tk.Button(root, text="Customize Gestures", activebackground='
 
 display_gestures_button = tk.Button(root, text="Display Gestures", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14)).place(x=30, rely=0.35, anchor='w')
 
+#add in buttons to play videos
+
 root.mainloop()
