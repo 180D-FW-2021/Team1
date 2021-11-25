@@ -1,4 +1,4 @@
-This program  reads the angles from the acceleromter, gyrscope
+This program  reads the angles from the acceleromter, gyrsocope
 and mangnetometer on a BerryIMU connected to a Raspberry Pi.
 
 
@@ -26,3 +26,13 @@ Python3;
 Run using;
 python3 berryIMU.py
 python3 calibrateBerryIMU.py
+
+
+
+
+
+CHANGES FROM ORIGINAL (made by me):
+- Added data folders
+- Added berryIMU_MQTTflags.py (main file)
+- Added berryIMUgestureDetectorMQTT.py (old version)
+- Added berryIMUmodified.py (old version)
