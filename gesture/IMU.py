@@ -1,9 +1,9 @@
 import smbus
 bus = smbus.SMBus(1)
-from LSM9DS0 import *
-from LSM9DS1 import *
-from LSM6DSL import *
-from LIS3MDL import *
+from gesture.LSM9DS0 import *
+from gesture.LSM9DS1 import *
+from gesture.LSM6DSL import *
+from gesture.LIS3MDL import *
 import time
 
 
@@ -277,6 +277,7 @@ def initIMU():
     elif(BerryIMUversion == 3):       #For BerryIMUv3
         #initialise the accelerometer
         writeByte(LSM6DSL_ADDRESS,LSM6DSL_CTRL1_XL,0b10011111)           #ODR 3.33 kHz, +/- 8g , BW = 400hz
+        writeByte(LSM6DSL_ADDRESS,LSM6DSL_CTRL8_XL,0b11001000)           #Low pass filter enabled, BW9, composite filter
         writeByte(LSM6DSL_ADDRESS,LSM6DSL_CTRL3_C,0b01000100)            #Enable Block Data update, increment during multi byte read
 
         #initialise the gyroscope
