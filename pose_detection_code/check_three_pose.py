@@ -44,8 +44,7 @@ def detectPose(image, pose, display=True):
         for landmark in results.pose_landmarks.landmark:
             
             # Append the landmark into the list.
-            landmarks.append((int(landmark.x * width), int(landmark.y * height),
-                                  (landmark.z * width)))
+            landmarks.append((int(landmark.x * width), int(landmark.y * height)))
     
     # Check if the original input image and the resultant image are specified to be displayed.
     if display:
@@ -74,9 +73,9 @@ def calculateAngle(landmark1, landmark2, landmark3):
     '''
  
     # Get the required landmarks coordinates.
-    x1, y1, _ = landmark1
-    x2, y2, _ = landmark2
-    x3, y3, _ = landmark3
+    x1, y1 = landmark1
+    x2, y2= landmark2
+    x3, y3 = landmark3
  
     # Calculate the angle between the three points
     angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
