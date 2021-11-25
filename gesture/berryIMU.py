@@ -41,21 +41,13 @@ MAG_MEDIANTABLESIZE = 9         # Median filter table size for magnetometer. Hig
 # Calibrating the compass isnt mandatory, however a calibrated
 # compass will result in a more accurate heading value.
 
-magXmin = 774
-magYmin = -2363
-magZmin = 1115
-magXmax = 838
-magYmax = -2300
-magZmax = 1236
+magXmin =  0
+magYmin =  0
+magZmin =  0
+magXmax =  0
+magYmax =  0
+magZmax =  0
 
-#magXmin =  1326
-#magYmin =  -4220
-#magZmin =  523
-#magXmax =  5032
-#magYmax =  -3079
-#magZmax =  884
-
-##magXmin  1326  magYmin  -4220  magZmin  523  ## magXmax  5032  magYmax  -3079  magZmax 884
 
 '''
 Here is an example:
@@ -69,33 +61,8 @@ Dont use the above values, these are just an example.
 '''
 ############### END Calibration offsets #################
 
-counter_gyro = 0
+counter = 0
 first_ten_flag = 0
-
-just_flicked_left_flag = 0
-just_flicked_right_flag = 0
-just_flicked_up_flag = 0
-just_flicked_down_flag = 0
-just_turned_left_flag = 0
-just_turned_right_flag = 0
-
-counter_flicked_left = 0
-counter_flicked_right = 0
-counter_flicked_up = 0
-counter_flicked_down = 0
-counter_turned_left = 0
-counter_turned_right = 0
-
-FL_detection_counter = 0
-FR_detection_counter = 0
-FU_detection_counter = 0
-FD_detection_counter = 0
-TL_detection_counter = 0
-TR_detection_counter = 0
-
-
-mqtt_send_flag = 0
-mqtt_counter = 0
 
 #Kalman filter variables
 Q_angle = 0.02
@@ -253,7 +220,7 @@ while True:
     b = datetime.datetime.now() - a
     a = datetime.datetime.now()
     LP = b.microseconds/(1000000*1.0)
-#    outputString = "Loop Time %5.2f " % ( LP )
+    outputString = "Loop Time %5.2f " % ( LP )
 
 
 
@@ -417,202 +384,44 @@ while True:
 
 
     ##################### END Tilt Compensation ########################
-    outputString = ""
 
-    #just_flicked_right_flag = 0
-    #just_flicked_left_flag = 0
-#    outputString += AccXangle
+    #if (AccXangle > 90):
+	#outputString += "RIGHT TURN DETECTED!"
+    #if(AccXangle < -90):
+	#outputString += "LEFT TURN DETECTED!"
 
-###########################LEFT/RIGHT TURNS#############################
+    counter_array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    counter_array[counter] = gyroZangle
+    counter = counter + 1
 
-    #detect left/right turns
-    if (AccYangle > 70):
-        TL_detection_counter = TL_detection_counter + 1
-        outputString += "LEFT TURN DETECTED!\t"
-        just_turned_left_flag = 1
-        if (TL_detection_counter >= 3):
-            mqtt_send_flag = 1
-    if(AccYangle < -70):
-        TR_detection_counter = TR_detection_counter + 1
-        outputString += "RIGHT TURN DETECTED!\t"
-        just_turned_right_flag = 1
-        if (TR_detection_counter >= 3):
-            mqtt_send_flag = 1
+    if(counter == 10):
+	counter = 0
+	first_ten_flag = 1
 
-    if(just_turned_left_flag):
-        counter_turned_left = counter_turned_left + 1
-    if(just_turned_right_flag):
-        counter_turned_right = counter_turned_right + 1
+    if(first_ten_flag):
+    	difference_gyro_Z = gyroZangle - counter_array[counter]
+	#print(difference_gyro_Z)
+	if(difference_gyro_Z > 5):
+	    outputString += "FORWARD PUSH DETECTED!"
 
-    if(counter_turned_left >= 15):
-        counter_turned_left = 0
-        TL_detection_counter = 0
-        just_turned_left_flag = 0
-    if(counter_turned_right >= 15):
-        counter_turned_right = 0
-        TR_detection_counter = 0
-        just_turned_right_flag = 0
+    if(CFangleX < -45):
+	outputString += "\tUPWARD LIFT DETECTED!"
+    #if(difference_gyro_Z > 5):
+#	outputString += "\tFORWARD PUSH DETECTED!"
 
-##########################FLICKING LEFT/RIGHT##########################
+    if 1:                       #Change to '0' to stop showing the angles from the accelerometer
+        outputString += "\t#  ACCX Angle %5.2f ACCY Angle %5.2f  #  " % (AccXangle, AccYangle)
 
-    #flags/counters for flicking left/right
-    if(just_flicked_right_flag): #make counters to see how long it's been since we first detected a flick
-        counter_flicked_right = counter_flicked_right + 1
-    if(just_flicked_left_flag):
-        counter_flicked_left = counter_flicked_left + 1
-        #print(counter_flicked_left)
-
-    if(counter_flicked_right == 15):
-        just_flicked_right_flag = 0 #reset flag so that we can flick left again
-        counter_flicked_right = 0
-        FR_detection_counter = 0
-    if(counter_flicked_left == 15):
-        just_flicked_left_flag = 0 #reset flag so that we can flick right again
-        counter_flicked_left = 0
-        FL_detection_counter = 0
-
-#########################FLICKING UP/DOWN############################
-
-    if(just_flicked_up_flag): #make counters to see how long it's been since we first detected a flick
-        counter_flicked_up = counter_flicked_up + 1
-    if(just_flicked_down_flag):
-        counter_flicked_down = counter_flicked_down + 1
-
-    if(counter_flicked_up == 50): #high counter here since nobody is trying to turn a tv on then immediately off again, and vice versa
-        just_flicked_up_flag = 0 #reset so that we can flick down again
-        counter_flicked_up = 0
-        FU_detection_counter = 0
-    if(counter_flicked_down == 50):
-        just_flicked_down_flag = 0 #reset so that we can flick up again
-        counter_flicked_down = 0
-        FD_detection_counter = 0
-
-#########################GYROSCOPE READINGS#########################
-
-    #flags/counters for flicking left/right (gyroscope readings)
-    if(first_ten_flag == 0):
-        counter_array_gyro_z = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        counter_array_gyro_x = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    counter_array_gyro_x[counter_gyro] = gyroXangle
-    counter_array_gyro_z[counter_gyro] = gyroZangle
-    counter_gyro = counter_gyro + 1
-    #print(counter_array_fp)
-    #print(counter)
-
-    if(counter_gyro == 10):
-        counter_gyro = 0
-        first_ten_flag = 1
-
-
-    difference_gyro_Z = 0
-    difference_gyro_X = 0
-    if(first_ten_flag == 1):
-        #print(counter_array_fp)
-        #print(gyroZangle)
-        difference_gyro_Z = gyroZangle - counter_array_gyro_z[counter_gyro]
-        difference_gyro_X = gyroXangle - counter_array_gyro_x[counter_gyro]
-        #counter_array_fp[counter] = gyroZangle
-        #print(difference_gyro_Z)
-    #    if(difference_gyro_Z > 5):
-     #       outputString += "FORWARD PUSH DETECTED!"
-
-#    if(CFangleX < -45):
-#        outputString += "\tUPWARD LIFT DETECTED!"
-
-
-#############################FLICKING OUTPUTS###########################
-
-    #reset flags/counters, output detection
-    if(difference_gyro_Z > 20 and just_flicked_right_flag == 0 and just_turned_right_flag == 0):
-        just_flicked_left_flag = 1
-        counter_flicked_left = 1
-        FL_detection_counter = FL_detection_counter + 1 #if there's at least 5 of this input
-        outputString += "\tLEFT FLICK DETECTED!"
-        if (FL_detection_counter >= 5):
-            mqtt_send_flag = 1
-    if(difference_gyro_Z < -20 and just_flicked_left_flag == 0 and just_turned_left_flag == 0):
-        just_flicked_right_flag = 1
-        counter_flicked_right = 1
-        FR_detection_counter = FR_detection_counter + 1
-        outputString += "\tRIGHT FLICK DETECTED!"
-        if (FR_detection_counter >= 5):
-            mqtt_send_flag = 1
-
-    if(difference_gyro_X > 40 and just_flicked_up_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0): #bigger numbers so that it's not as sensitive
-        just_flicked_down_flag = 1
-        counter_flicked_down = 1
-        FD_detection_counter = FD_detection_counter + 1
-        outputString += "\tFLICK DOWN DETECTED"
-        if (FD_detection_counter >= 5):
-            mqtt_send_flag = 1
-    if(difference_gyro_X < -40 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0):
-        just_flicked_up_flag = 1
-        counter_flicked_up = 1
-        FU_detection_counter = FU_detection_counter + 1
-        outputString += "\tFLICK UP DETECTED"
-        if (FU_detection_counter >= 5):
-            mqtt_send_flag = 1
-
-
-###########################MQTT HANDLING##############################
-
-    if (mqtt_send_flag == 1):
-        outputString += "\tMQTT SEND FLAG ON!"
-        if (mqtt_counter == 0): #first time
-            #send mqtt thing
-            if 1:
-                outputString += "\tSEND MQTT"
-            if 0:
-                outputString += "\nTL_detection_counter: %5.2f" % TL_detection_counter
-                outputString += "\nTR_detection_counter: %5.2f" % TR_detection_counter
-                outputString += "\nFL_detection_counter: %5.2f" % FL_detection_counter
-                outputString += "\nFR_detection_counter: %5.2f" % FR_detection_counter
-                outputString += "\nFD_detection_counter: %5.2f" % FD_detection_counter
-                outputString += "\nFU_detection_counter: %5.2f" % FU_detection_counter
-                outputString += "\n"
-            if(TL_detection_counter >= 3):
-                outputString += "\tSEND \"TURN LEFT\" MQTT SIGNAL"
-                #TL_detection_counter = 0
-                #TR_detection_counter = 0 
-            if(TR_detection_counter >= 3):
-                outputString += ""
-                #TR_detection_counter = 0
-                #TL_detection_counter = 0
-            if(FL_detection_counter >= 5):
-                outputString += ""
-            if(FR_detection_counter >= 5):
-                outputString += ""
-            if(FD_detection_counter >= 5):
-                outputString += ""
-            if(FU_detection_counter >= 5):
-                outputString += ""
-            #mqtt_counter = 0 #placeholder line
-
-        mqtt_counter = mqtt_counter + 1
-        if (mqtt_counter >= 15): #wait at least 15 cycles to reset ability to send mqtt messages
-            mqtt_counter = 0
-            mqtt_send_flag = 0
-
-
-###########################DEBUGGING INFORMATION######################
-
-    if 0:                       #Change to '0' to stop showing the angles from the accelerometer
-        outputString += "\t# ACCX Angle %5.2f ACCY Angle %5.2f  #  " % (AccXangle, AccYangle)
-
-    if 0:
-        outputString += "%5.2f" % (AccXangle)
-
-    if 0:                       #Change to '0' to stop  showing the angles from the gyro
+    if 1:                       #Change to '0' to stop  showing the angles from the gyro
         outputString +="\t# GRYX Angle %5.2f  GYRY Angle %5.2f  GYRZ Angle %5.2f # " % (gyroXangle,gyroYangle,gyroZangle)
 
-    if 0:                       #Change to '0' to stop  showing the angles from the complementary filter
+    if 1:                       #Change to '0' to stop  showing the angles from the complementary filter
         outputString +="\t#  CFangleX Angle %5.2f   CFangleY Angle %5.2f  #" % (CFangleX,CFangleY)
 
-    if 0:                       #Change to '0' to stop  showing the heading
+    if 1:                       #Change to '0' to stop  showing the heading
         outputString +="\t# HEADING %5.2f  tiltCompensatedHeading %5.2f #" % (heading,tiltCompensatedHeading)
 
-    if 0:                       #Change to '0' to stop  showing the angles from the Kalman filter
+    if 1:                       #Change to '0' to stop  showing the angles from the Kalman filter
         outputString +="# kalmanX %5.2f   kalmanY %5.2f #" % (kalmanX,kalmanY)
 
     print(outputString)

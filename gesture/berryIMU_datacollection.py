@@ -428,13 +428,13 @@ while True:
     #detect left/right turns
     if (AccYangle > 70):
         TL_detection_counter = TL_detection_counter + 1
-        outputString += "LEFT TURN DETECTED!\t"
+#        outputString += "LEFT TURN DETECTED!\t"
         just_turned_left_flag = 1
         if (TL_detection_counter >= 3):
             mqtt_send_flag = 1
     if(AccYangle < -70):
         TR_detection_counter = TR_detection_counter + 1
-        outputString += "RIGHT TURN DETECTED!\t"
+ #       outputString += "RIGHT TURN DETECTED!\t"
         just_turned_right_flag = 1
         if (TR_detection_counter >= 3):
             mqtt_send_flag = 1
@@ -528,14 +528,14 @@ while True:
         just_flicked_left_flag = 1
         counter_flicked_left = 1
         FL_detection_counter = FL_detection_counter + 1 #if there's at least 5 of this input
-        outputString += "\tLEFT FLICK DETECTED!"
+  #      outputString += "\tLEFT FLICK DETECTED!"
         if (FL_detection_counter >= 5):
             mqtt_send_flag = 1
     if(difference_gyro_Z < -20 and just_flicked_left_flag == 0 and just_turned_left_flag == 0):
         just_flicked_right_flag = 1
         counter_flicked_right = 1
         FR_detection_counter = FR_detection_counter + 1
-        outputString += "\tRIGHT FLICK DETECTED!"
+   #     outputString += "\tRIGHT FLICK DETECTED!"
         if (FR_detection_counter >= 5):
             mqtt_send_flag = 1
 
@@ -543,14 +543,14 @@ while True:
         just_flicked_down_flag = 1
         counter_flicked_down = 1
         FD_detection_counter = FD_detection_counter + 1
-        outputString += "\tFLICK DOWN DETECTED"
+    #    outputString += "\tFLICK DOWN DETECTED"
         if (FD_detection_counter >= 5):
             mqtt_send_flag = 1
     if(difference_gyro_X < -40 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0):
         just_flicked_up_flag = 1
         counter_flicked_up = 1
         FU_detection_counter = FU_detection_counter + 1
-        outputString += "\tFLICK UP DETECTED"
+     #   outputString += "\tFLICK UP DETECTED"
         if (FU_detection_counter >= 5):
             mqtt_send_flag = 1
 
@@ -558,10 +558,10 @@ while True:
 ###########################MQTT HANDLING##############################
 
     if (mqtt_send_flag == 1):
-        outputString += "\tMQTT SEND FLAG ON!"
+      #  outputString += "\tMQTT SEND FLAG ON!"
         if (mqtt_counter == 0): #first time
             #send mqtt thing
-            if 1:
+            if 0:
                 outputString += "\tSEND MQTT"
             if 0:
                 outputString += "\nTL_detection_counter: %5.2f" % TL_detection_counter
@@ -572,7 +572,8 @@ while True:
                 outputString += "\nFU_detection_counter: %5.2f" % FU_detection_counter
                 outputString += "\n"
             if(TL_detection_counter >= 3):
-                outputString += "\tSEND \"TURN LEFT\" MQTT SIGNAL"
+                #outputString += "\tSEND \"TURN LEFT\" MQTT SIGNAL"
+                outputString += ""
                 #TL_detection_counter = 0
                 #TR_detection_counter = 0 
             if(TR_detection_counter >= 3):
@@ -602,6 +603,9 @@ while True:
 
     if 0:
         outputString += "%5.2f" % (AccXangle)
+
+    if 1:
+        outputString += "%5.2f" % (difference_gyro_X)
 
     if 0:                       #Change to '0' to stop  showing the angles from the gyro
         outputString +="\t# GRYX Angle %5.2f  GYRY Angle %5.2f  GYRZ Angle %5.2f # " % (gyroXangle,gyroYangle,gyroZangle)

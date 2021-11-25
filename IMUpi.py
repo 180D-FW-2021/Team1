@@ -20,10 +20,18 @@
 import sys
 import time
 import math
-import IMU
+import gesture.IMU as IMU
 import datetime
 import os
+import comms.comms as comms
 
+server = "mqtt.eclipseprojects.io"
+
+conn = comms.mqttCommunicator(server, {})
+
+#time.sleep(5)
+
+#conn.send_command("volumeUp")
 
 RAD_TO_DEG = 57.29578
 M_PI = 3.14159265358979323846
@@ -573,19 +581,25 @@ while True:
                 outputString += "\n"
             if(TL_detection_counter >= 3):
                 outputString += "\tSEND \"TURN LEFT\" MQTT SIGNAL"
+                conn.send_command("volumeDown")
                 #TL_detection_counter = 0
                 #TR_detection_counter = 0 
             if(TR_detection_counter >= 3):
                 outputString += ""
+                conn.send_command("volumeUp")
                 #TR_detection_counter = 0
                 #TL_detection_counter = 0
             if(FL_detection_counter >= 5):
                 outputString += ""
+                conn.send_command("channelDown")
             if(FR_detection_counter >= 5):
                 outputString += ""
+                conn.send_command("channelUp")
             if(FD_detection_counter >= 5):
+                conn.send_command("powerOff")
                 outputString += ""
             if(FU_detection_counter >= 5):
+                conn.send_command("powerOn")
                 outputString += ""
             #mqtt_counter = 0 #placeholder line
 
