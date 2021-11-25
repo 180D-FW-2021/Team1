@@ -62,7 +62,7 @@ class mqttCommunicator:
             "timestamp" : time.time()
         }
         
-        self.client.publish(self.topic, json.loads(payload), qos=1)
+        self.client.publish(self.topic, json.dumps(payload), qos=1)
 
     
 
