@@ -1,6 +1,8 @@
 #test how the pose_detection can work with multiple poses
 #determine what our order of priority of poses is like
 #the poses we'll use is dab and hands together
+#combine both types, i.e the list and the pure thing?
+#think about it later
 
 from time import time
 from math import hypot
