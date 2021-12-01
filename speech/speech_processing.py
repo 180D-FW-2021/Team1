@@ -151,20 +151,20 @@ def listen_print_loop(responses):
                 elif single_digit_volume:
                     print("COMMAND DETECTED - Setting volume to " + single_num_digit_map[single_digit_volume.group(0).lower()])
                 else:
-                    print("ERROR - No number detected")
+                    print("COMMAND ERROR - No valid number detected")
 
             # channel command detection
             elif re.search(r"\b(channel)\b", transcript, re.I):
                 # regular expression detects any three-digit number
-                channel = re.search("(\d{1,3})%?$", transcript, re.I)
+                channel = re.search("([^\d]\d{1,3})%?$", transcript, re.I)
                 # detect word form numbers zero-ten
                 single_digit_channel = re.search(r"\b(zero|one|two|three|four|five|six|seven|eight|nine|ten)\b", transcript, re.I)
                 if channel:
-                    print("COMMAND DETECTED - Setting channel to " + channel.group(0))
+                    print("COMMAND DETECTED - Setting channel to" + channel.group(0))
                 elif single_digit_channel:
                     print("COMMAND DETECTED - Setting channel to " + single_num_digit_map[single_digit_channel.group(0).lower()])
                 else:
-                    print("ERROR - No number detected")
+                    print("COMMAND ERROR - No valid number detected")
             
             # power command detection
             elif re.search(r"\b(power)\b", transcript, re.I):
@@ -173,7 +173,7 @@ def listen_print_loop(responses):
                 if power:
                     print("COMMAND DETECTED - Powering " + power.group(0))
                 else:
-                    print("ERROR - on/off not specified")
+                    print("COMMAND ERROR - on/off not specified")
 
             # change mode command detection
             elif re.search(r"\b(mode)\b", transcript, re.I):
@@ -182,7 +182,7 @@ def listen_print_loop(responses):
                 if mode:
                     print("COMMAND DETECTED - Switching to " + mode.group(0) + " mode")
                 else:
-                    print("ERROR - gesture/pose not specified")
+                    print("COMMAND ERROR - gesture/pose not specified")
 
             num_chars_printed = 0
 
