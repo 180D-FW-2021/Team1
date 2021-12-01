@@ -130,6 +130,10 @@ def checkpose(landmarks, output_image, display=False):
         output_image: the image with the detected pose landmarks drawn and pose label written
         label: the classified pose label of the person in the output_image
     '''
+    #first demo it for two poses: check dab and psy style pose
+    #psy requires angle measure of the left and right arms
+    #check dab requires euclidean distance between left and right arms, and
+    #distance between nose and either elbow
 
     #initialize the label of the pose, which is unknown at this stage
     label = 'Unknown Pose'
@@ -139,12 +143,51 @@ def checkpose(landmarks, output_image, display=False):
 
     #here we will calculate the required angles
 
+    #calculate angles required for psy pose
+    left_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value], landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
+    right_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value], landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value])
+
     #here we will calculate the distance between two landmarks
 
+    #calculate euclidean distances required for dab pose
+    nose_landmark = landmarks[mp_pose.PoseLandmark.NOSE.value]
+    left_elbow_landmark = landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value]
+    right_elbow_landmark = landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value]
+    left_wrist_landmark = landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value]
+    right_wrist_landmark = landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value]
+
+    left_nose_distance = int(hypot(left_elbow_landmark[0] - nose_landmark[0], left_elbow_landmark[1] - nose_landmark[1]))
+    right_nose_distance = int(hypot(right_elbow_landmark[0] - nose_landmark[0], right_elbow_landmark[1] - nose_landmark[1]))
+    wrist_distance = int(abs(left_wrist_landmark[1] - right_wrist_landmark[1]))
+
     #here we will check for what pose it could be
+    #first is the dab check
+    if wrist_distance > 50:
+        if left_nose_distance < 200:
+            label = 'left dab'
+            color = (0,255,0)
+        elif right_nose_distance < 200:
+            label = 'right dab'
+            color = (0,255,0)
+    elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250):
+        label = 'psy pose'
+        color = (0,255,0)
+
 
     #here we will check if the pose was identified or not, and output the image
-    print("hyello")
+    cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
+
+    #check if the resultant image is specified to be displayed
+    if display:
+    
+        # Display the resultant image.
+        plt.figure(figsize=[10,10])
+        plt.imshow(output_image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
+        
+    else:
+        
+        # Return the output image and the classified label.
+        return output_image, label
 
 # Initialize the VideoCapture object to read from the webcam.
 camera_video = cv2.VideoCapture(0)
@@ -173,17 +216,17 @@ while camera_video.isOpened():
     # Resize the frame while keeping the aspect ratio.
     frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
     
-    '''
+    
     # Perform Pose landmark detection.
-    frame, landmarks = detectPose(frame, pose_video, display=False)
+    frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
     
     
     # Check if the landmarks are detected.
     if landmarks:
         
         # Perform the Pose Classification.
-        frame, _ = classifyPose(landmarks, frame, display=False)
-    '''
+        frame, _ = checkpose(landmarks, frame, display=False)
+    
 
     # Display the frame.
     cv2.imshow('Pose Classification', frame)
