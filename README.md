@@ -18,6 +18,6 @@ Uses Google Cloud Speech-to-Text to detect keywords for specific voice commands.
 Directory: `speech`
 
 ## GUI
-Graphical user interface created with TKinter to help the user orient themselves with the product.
+Graphical user interface created with TKinter to help the user orient themselves with the product. Includes video tutorials of how to use the product.
 
 Directory: `gui`
