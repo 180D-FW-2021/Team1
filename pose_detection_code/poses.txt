@@ -1,0 +1,11 @@
+This is where all the planned/current poses will go and how to achieve them
+This will be updated whenever a new idea is in
+
+Current Poses:
+    Dab_Detection: distance between elbow and nose landmark < 100; distance between left and \
+        right hand landmarks >50
+    Hands_Together: distance between hand landmarks < 50
+    T-Pose: arms at 180 degrees 
+    PSY Style: both arms at 90 degrees
+    warrior II pose: in check_three_pose.py
+    Tree pose: in check_three_pose.py
