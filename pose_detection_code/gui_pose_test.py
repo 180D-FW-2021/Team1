@@ -1,15 +1,14 @@
-#This is code that will test whether what im planning to do will work or not
-#to get a dabbing pose, we need some things
-#it only cares about the upper body
-#for now, let one of the hands be higher than the other
-#for now, choose right hand over left hand
-#then the left elbow has to be close to the head
+#!/usr/bin/env python3
 
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
 import cv2
 from time import time
 from math import hypot
 import mediapipe as mp
 import matplotlib.pyplot as plt
+import webbrowser
 
 # Initialize mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -135,6 +134,9 @@ def checkDab(image, results, draw=False, display=False):
         #set the color value to green
         color = (0,255,0)
 
+        #if there is a dab, then print out a window that states there has been a dab
+        webbrowser.open('https://www.youtube.com/watch?v=nOj_A3aZxGs')
+
     #otherwise
     else:
 
@@ -163,49 +165,82 @@ def checkDab(image, results, draw=False, display=False):
         # Return the output image and the classified hands status indicating whether the hands are joined or not.
         return output_image, person_dab
 
-# Initialize the VideoCapture object to read from the webcam.
-camera_video = cv2.VideoCapture(0)
-camera_video.set(3,1280)
-camera_video.set(4,960)
+def dab_button_pressed():
+    # Initialize the VideoCapture object to read from the webcam.
+    camera_video = cv2.VideoCapture(0)
+    camera_video.set(3,1280)
+    camera_video.set(4,960)
 
-# Create named window for resizing purposes.
-cv2.namedWindow('Dab Detection', cv2.WINDOW_NORMAL)
+    # Create named window for resizing purposes.
+    cv2.namedWindow('Dab Detection', cv2.WINDOW_NORMAL)
 
-#iterate until the webcam is accessed successfully
-while camera_video.isOpened():
+    #iterate until the webcam is accessed successfully
+    while camera_video.isOpened():
 
-    # Read a frame.
-    ok, frame = camera_video.read()
-    
-    # Check if frame is not read properly then continue to the next iteration to read the next frame.
-    if not ok:
-        continue
+        # Read a frame.
+        ok, frame = camera_video.read()
+        
+        # Check if frame is not read properly then continue to the next iteration to read the next frame.
+        if not ok:
+            continue
 
-    # Flip the frame horizontally for natural (selfie-view) visualization.
-    frame = cv2.flip(frame, 1)
+        # Flip the frame horizontally for natural (selfie-view) visualization.
+        frame = cv2.flip(frame, 1)
 
-    # Get the height and width of the frame of the webcam video.
-    frame_height, frame_width, _ = frame.shape
-    
-    # Perform the pose detection on the frame.
-    frame, results = detectPose(frame, pose_video, draw=True)
-    
-    # Check if the pose landmarks in the frame are detected.
-    if results.pose_landmarks:
+        # Get the height and width of the frame of the webcam video.
+        frame_height, frame_width, _ = frame.shape
+        
+        # Perform the pose detection on the frame.
+        frame, results = detectPose(frame, pose_video, draw=True)
+        
+        # Check if the pose landmarks in the frame are detected.
+        if results.pose_landmarks:
 
-        # Check if the left and right hands are joined.
-        frame, _ = checkDab(frame, results, draw=True)
+            # Check if the left and right hands are joined.
+            frame, _ = checkDab(frame, results, draw=True)
 
-    # Display the frame.
-    cv2.imshow('Dabbing?', frame)
-    
-    # Wait for 1ms. If a key is pressed, retreive the ASCII code of the key.
-    k = cv2.waitKey(1) & 0xFF
-    
-    # Check if 'ESC' is pressed and break the loop.
-    if(k == 27):
-        break
+        # Display the frame.
+        cv2.imshow('Dabbing?', frame)
+        
+        # Wait for 1ms. If a key is pressed, retreive the ASCII code of the key.
+        k = cv2.waitKey(1) & 0xFF
+        
+        # Check if 'ESC' is pressed and break the loop.
+        if(k == 27):
+            break
 
-#release the videocapture object and close the window
-camera_video.release()
-cv2.destroyAllWindows()
+    #release the videocapture object and close the window
+    camera_video.release()
+    cv2.destroyAllWindows()
+
+root = tk.Tk()
+root.geometry('800x600')
+root.wm_title("Air Controller")
+
+def hello():
+    messagebox.showinfo( "Hello Python","Hello World")
+
+header = tk.Frame(root, bg='#8ecae6') #8ecae6
+content = tk.Frame(root, bg='white')
+footer = tk.Frame(root, bg='white')
+
+root.columnconfigure(0, weight=1) # 100% 
+
+root.rowconfigure(0, weight=1) # 20%
+root.rowconfigure(1, weight=8) # 70%
+root.rowconfigure(2, weight=1) # 10%
+
+header.grid(row=0, sticky='news')
+content.grid(row=1, sticky='news')
+footer.grid(row=2, sticky='news')
+
+text = tk.Label(root, text="AirController", bg='#8ecae6', font=("Helvetica", 18)).place(relx=0.5,rely=0.05,anchor='center')
+
+tutorial_button = tk.Button(root, text="Show Tutorial", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14)).place(x=30, rely=0.2, anchor='w')
+
+customize_button = tk.Button(root, text="Customize Gestures", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14), command=hello).place(x=770, rely=0.2, anchor='e')
+
+display_gestures_button = tk.Button(root, text="Display Gestures", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14)).place(x=30, rely=0.35, anchor='w')
+
+detect_the_dab_button = tk.Button(root, text="Detect Dab", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14), command=dab_button_pressed).place(x=30, rely=0.5, anchor='w')
+root.mainloop()

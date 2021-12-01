@@ -1,5 +1,4 @@
 import cv2
-import pyautogui
 from time import time
 from math import hypot
 import mediapipe as mp

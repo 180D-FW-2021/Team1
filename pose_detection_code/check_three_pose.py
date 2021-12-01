@@ -44,8 +44,7 @@ def detectPose(image, pose, display=True):
         for landmark in results.pose_landmarks.landmark:
             
             # Append the landmark into the list.
-            landmarks.append((int(landmark.x * width), int(landmark.y * height),
-                                  (landmark.z * width)))
+            landmarks.append((int(landmark.x * width), int(landmark.y * height)))
     
     # Check if the original input image and the resultant image are specified to be displayed.
     if display:
@@ -54,9 +53,6 @@ def detectPose(image, pose, display=True):
         plt.figure(figsize=[22,22])
         plt.subplot(121);plt.imshow(image[:,:,::-1]);plt.title("Original Image");plt.axis('off');
         plt.subplot(122);plt.imshow(output_image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
-        
-        # Also Plot the Pose landmarks in 3D.
-        mp_drawing.plot_landmarks(results.pose_world_landmarks, mp_pose.POSE_CONNECTIONS)
         
     # Otherwise
     else:
@@ -77,9 +73,9 @@ def calculateAngle(landmark1, landmark2, landmark3):
     '''
  
     # Get the required landmarks coordinates.
-    x1, y1, _ = landmark1
-    x2, y2, _ = landmark2
-    x3, y3, _ = landmark3
+    x1, y1 = landmark1
+    x2, y2= landmark2
+    x3, y3 = landmark3
  
     # Calculate the angle between the three points
     angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
@@ -229,7 +225,7 @@ pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_
 mp_drawing = mp.solutions.drawing_utils
 
 #setup pose function for video
-pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
+pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.7, min_tracking_confidence=0.7, model_complexity=1)
 
 # Initialize the VideoCapture object to read from the webcam.
 camera_video = cv2.VideoCapture(0)
