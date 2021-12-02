@@ -23,4 +23,4 @@ Graphical user interface created with TKinter to help the user orient themselves
 Directory: `gui`
 
 ## How to Use
-Download all the files contained within our repo. Then, run IMUpi.py on one Raspberry Pi. Run mainPi.py on another Raspberry Pi. Run gui.py on a computer with a webcam.
+Download all the files contained within our repo onto two Raspberry Pis and a computer with a webcam. Then, run IMUpi.py on one Raspberry Pi. Run mainPi.py on another Raspberry Pi. Run gui.py on the computer.
