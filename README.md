@@ -21,3 +21,6 @@ Directory: `speech`
 Graphical user interface created with TKinter to help the user orient themselves with the product. Includes video tutorials of how to use the product.
 
 Directory: `gui`
+
+## How to Use
+Download all the files contained within our repo. Then, run IMUpi.py on one Raspberry Pi. Run mainPi.py on another Raspberry Pi. Run gui.py on a computer with a webcam.
