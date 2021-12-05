@@ -13,6 +13,13 @@ class VideoPlayer(object):
         self.audio_thread = None
         self.stop_threads = threading.Event()
 
+def play_video(tutorial_name):
+    global video_name, audio_name, video
+    video_name = tutorial_name+'.mp4'
+    video = imageio.get_reader(video_name)
+    audio_name = tutorial_name+'.mp3'
+    start_threads()
+
 def start_threads():
     label = tk.Label(root)    
     label.place(relx = 0.5, rely = 0.7, anchor='center')
@@ -32,18 +39,20 @@ def stream(label):
         frame_image = ImageTk.PhotoImage(Image.fromarray(image))
         label.config(image=frame_image)
         label.image = frame_image
-        time.sleep(0.002)
+        #time.sleep(0.002)
 
 def play():
-    playsound('rickroll.mp3')
+    playsound(audio_name)
 
 def reset():
     sys.stdout.flush()
     os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
 
-
-video_name = "rickroll.mp4" #This is your video file path
-video = imageio.get_reader(video_name)
+def launch_cv():
+    sys.stdout.flush()
+    os.execl(sys.executable,
+    "../pose_detection_code/togther.py",
+    "../pose_detection_code/together.py")
 
 root = tk.Tk()
 root.geometry('1200x800')
@@ -62,18 +71,52 @@ header.grid(row=0, sticky='news')
 content.grid(row=1, sticky='news')
 footer.grid(row=2, sticky='news')
 
-text = tk.Label(root, text="AirController", bg='#8ecae6', font=("Helvetica", 18)).place(relx=0.5,rely=0.05,anchor='center')
+text = tk.Label(root, text="AirController", bg='#8ecae6', font=("Helvetica", 22)).place(relx=0.5,rely=0.05,anchor='center')
+
+demo_videos = tk.Label(root, text="Tutorial Videos", font=("Helvetica",
+    18)).place(relx=0.5, rely=0.15,anchor='center')
 
 video_player = VideoPlayer()
 
-tutorial_button = tk.Button(root, text="Show Tutorial",
+channel_up = tk.Button(root, text="Channel Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=start_threads).place(x=30, rely=0.2, anchor='w')
+        width=25, font=("Helvetica", 14), command=lambda:
+        play_video("channel-up")).place(x=30,
+                rely=0.25, anchor='w')
 
-customize_button = tk.Button(root, text="Customize Gestures", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14)).place(x=770, rely=0.2, anchor='e')
+channel_down = tk.Button(root, text="Channel Down",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=lambda:
+        play_video("channel-down")).place(x=30, rely=0.40, anchor='w')
 
-display_gestures_button = tk.Button(root, text="Display Gestures", activebackground='#517687', activeforeground='black', bg='#8ecae6', width=25, font=("Helvetica", 14)).place(x=30, rely=0.35, anchor='w')
+power_on = tk.Button(root, text="Power On",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=lambda:
+        play_video("turn-on")).place(x=717, rely=0.25, anchor='e')
 
-#add in buttons to play videos
+
+power_off = tk.Button(root, text="Power Off",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=lambda:
+        play_video("turn-off")).place(x=717, rely=0.40, anchor='e')
+
+volume_up = tk.Button(root, text="Volume Up",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=lambda:
+        play_video("vol-up")).place(x=900,
+                rely=0.25, anchor='w')
+
+volume_down = tk.Button(root, text="Volume Down",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=lambda:
+        play_video("vol-down")).place(x=900, rely=0.40, anchor='w')
+
+start_controller = tk.Label(root, text="Start Controller", font=("Helvetica",
+    18)).place(relx=0.5, rely=0.55,anchor='center')
+
+start_camera = tk.Button(root, text="Start Camera",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=launch_cv).place(x=717,
+                rely=0.70, anchor='e')
 
 root.mainloop()
