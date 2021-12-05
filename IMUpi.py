@@ -585,22 +585,22 @@ while True:
                 #TL_detection_counter = 0
                 #TR_detection_counter = 0 
             if(TR_detection_counter >= 3):
-                outputString += ""
+                outputString += "\tSEND \"TURN RIGHT\" MQTT SIGNAL"
                 conn.send_command("volumeUp")
                 #TR_detection_counter = 0
                 #TL_detection_counter = 0
             if(FL_detection_counter >= 5):
-                outputString += ""
+                outputString += "\tSEND \"FLICK LEFT\" MQTT SIGNAL"
                 conn.send_command("channelDown")
             if(FR_detection_counter >= 5):
-                outputString += ""
+                outputString += "\tSEND \"FLICK RIGHT\" MQTT SIGNAL"
                 conn.send_command("channelUp")
             if(FD_detection_counter >= 5):
                 conn.send_command("powerOff")
-                outputString += ""
+                outputString += "\tSEND \"FLICK DOWN\" MQTT SIGNAL"
             if(FU_detection_counter >= 5):
                 conn.send_command("powerOn")
-                outputString += ""
+                outputString += "\tSEND \"FLICK UP\" MQTT SIGNAL"
             #mqtt_counter = 0 #placeholder line
 
         mqtt_counter = mqtt_counter + 1
