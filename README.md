@@ -35,6 +35,7 @@ Download all the files contained within our repo onto two Raspberry Pis and a co
 Developed by Steven Chu, Maksym Prokopovych, Sierra Rose, and Isaac Xu.
 
 IMUpi.py: this file, and others in the `gesture` subdirectory, are adapted from http://github.com/ozzmaker/BerryIMU.git. 
+
 mainPi.py: this file, and others in the `comms` subdirectory, are adapted from lab 3.
 
 Further credits can be found in the READMEs of each subdirectory.
