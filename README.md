@@ -7,7 +7,7 @@ Uses a programmed BerryIMU to detect specific hand motions and MQTT to communica
 
 Directory: `gesture`
 
-## Pose Recognition (opencv and mediapipe)
+## Pose Recognition (OpenCV and MediaPipe)
 Uses computer vision and image processing to detect specific body positions and poses.
 
 Directory: `pose_detection_code`
