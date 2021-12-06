@@ -2,13 +2,18 @@ import os
 import time
 import comms
 
+
+def command(str):
+    os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY " + str)
+    print("Recieved a " + str + " command")
+
 actionTable = {
 
-    "volumeUp" : lambda : os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY_VOLUMEUP"),
-    "volumeDown" : lambda : os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY_VOLUMEDOWN"),
-    "power" : lambda : os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY_POWER"),
-    "channelUp" : lambda : os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY_CHANNELUP"),
-    "channelDown" : lambda : os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY_CHANNELDOWN")
+    "volumeUp" : lambda : command("KEY_VOLUMEUP"),
+    "volumeDown" : lambda : command("KEY_VOLUMEDOWN"),
+    "power" : lambda : command("KEY_POWER"),
+    "channelUp" : lambda : command("KEY_CHANNELUP"),
+    "channelDown" : lambda : command("KEY_CHANNELDOWN"),
 
 }
 
