@@ -22,5 +22,10 @@ Graphical user interface created with TKinter to help the user orient themselves
 
 Directory: `gui`
 
+## Demonstration
+Demonstrations of our individual subcomponents of our projects working.
+
+Directory: `demonstration_videos`
+
 ## How to Use
 Download all the files contained within our repo onto two Raspberry Pis and a computer with a webcam. Then, run IMUpi.py on one Raspberry Pi using python3. Run mainPi.py on another Raspberry Pi. Run gui.py on the computer. The two Raspberry Pis will communicate with each other. The computer will communicate with the Raspi running mainPi.py. The Raspi running mainPi.py will then communicate with the TV to actually be able to implement our remote. The user will be able to use gesture commands on the Raspi running IMUpi.py, or webcam-based commands on the computer. The computer's GUI will also provide a tutorial of how to use the Raspi gesture system.
