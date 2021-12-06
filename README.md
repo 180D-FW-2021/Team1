@@ -29,3 +29,11 @@ Directory: `demonstration_videos`
 
 ## How to Use
 Download all the files contained within our repo onto two Raspberry Pis and a computer with a webcam. Then, run IMUpi.py on one Raspberry Pi using python3. Run mainPi.py on another Raspberry Pi. Run gui.py on the computer. The two Raspberry Pis will communicate with each other. The computer will communicate with the Raspi running mainPi.py. The Raspi running mainPi.py will then communicate with the TV to actually be able to implement our remote. The user will be able to use gesture commands on the Raspi running IMUpi.py, or webcam-based commands on the computer. The computer's GUI will also provide a tutorial of how to use the Raspi gesture system.
+
+##Credits
+Developed by Steven Chu, Maksym Prokopovych, Sierra Rose, and Isaac Xu.
+
+IMUpi.py: this file, and others in the `gesture` subdirectory, are adapted from http://github.com/ozzmaker/BerryIMU.git. 
+mainPi.py: this file, and others in the `comms` subdirectory, are adapted from lab 3.
+
+Further credits can be found in the READMEs of each subdirectory.
