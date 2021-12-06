@@ -144,12 +144,15 @@ def checkpose(landmarks, output_image, display=False):
     #here we will calculate the required angles
 
     #calculate angles required for psy pose
+    #for a psy pose we need both arm angles to be at 90 degrees
     left_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value], landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
     right_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value], landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value])
 
     #here we will calculate the distance between two landmarks
 
     #calculate euclidean distances required for dab pose
+    #the dab pose needs the nose to be close to the elbow
+    #and there be a sizeable distance between both hands
     nose_landmark = landmarks[mp_pose.PoseLandmark.NOSE.value]
     left_elbow_landmark = landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value]
     right_elbow_landmark = landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value]
@@ -160,7 +163,13 @@ def checkpose(landmarks, output_image, display=False):
     right_nose_distance = int(hypot(right_elbow_landmark[0] - nose_landmark[0], right_elbow_landmark[1] - nose_landmark[1]))
     wrist_distance = int(abs(left_wrist_landmark[1] - right_wrist_landmark[1]))
 
+    #the hands together pose
+    #requires both hand landmarks to be close to each other
+    hands_distance = int(hypot(left_wrist_landmark[0] - right_wrist_landmark[0], left_wrist_landmark[1] - right_wrist_landmark[1]))
+
     #here we will check for what pose it could be
+    #current hierarchy of poses
+    #left dab -> right dab -> psy -> hands_together
     if wrist_distance > 50:
         print(wrist_distance)
         if left_nose_distance < 200:
@@ -171,6 +180,9 @@ def checkpose(landmarks, output_image, display=False):
             color = (0,255,0)
     elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250):
         label = 'psy pose'
+        color = (0,255,0)
+    elif hands_distance < 130:
+        label = 'hands together'
         color = (0,255,0)
 
     #here we will check if the pose was identified or not, and output the image
