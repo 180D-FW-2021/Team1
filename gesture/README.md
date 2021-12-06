@@ -1,5 +1,9 @@
 ## Credits
 
+The BerryIMU code which gathers the sensor information is adapted from http://github.com/ozzmaker/BerryIMU.git.
+
+## Information and Statistics
+
 This code gathers a bunch of data from the BerryIMU sensors, sets arbitrary thresholds to detect when certain gestures are executed, and sends MQTT messages to our server with which gesture was detected. There are various flags to detect when a gesture was just made so as to prevent the detection of its opposite gesture within a certain time frame, as many gestures require the Pi to be put back in its original position after. 
 
 Currently, the gesture accuracy is as follows:
@@ -24,4 +28,3 @@ Channel down/up appear to work well, but more testing will be done to see if I c
 
 In the main directory, IMUpi.py is the actual file to run in order to use the files within this directory. None of these files should be executed directly.
 
-The BerryIMU code which gathers the sensor information is adapted from http://github.com/ozzmaker/BerryIMU.git.
