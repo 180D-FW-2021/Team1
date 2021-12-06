@@ -1,11 +1,28 @@
-import os
 import time
-import comms
+import comms.comms as comms
+import os
+import socket
+import lirc
+
+
+lircClient = lirc.Client(
+  connection=lirc.LircdConnection(
+    address="/var/run/lirc/lircd",
+    socket=socket.socket(socket.AF_UNIX, socket.SOCK_STREAM),
+    timeout = 5.0
+  )
+)
+
+remote = "sharp"
+#remote = "UR5U-8790L-TWC"
+
 
 
 def command(str):
-    os.system("irsend SEND_ONCE UR5U-8790L-TWC KEY " + str)
-    print("Recieved a " + str + " command")
+    command = "timeout -s SIGINT 0.3 irsend SEND_ONCE " + remote + " " + str
+    os.system(command)
+    #lircClient.send_once(remote, str)
+    print("Recieved a " + str + ", running ")
 
 actionTable = {
 
@@ -21,3 +38,6 @@ actionTable = {
 server = 'mqtt.eclipseprojects.io'
 
 reciever = comms.mqttCommunicator(server, actionTable)
+
+while(1):
+    pass

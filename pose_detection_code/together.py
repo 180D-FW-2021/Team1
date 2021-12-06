@@ -13,16 +13,23 @@ import mediapipe as mp
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Initializing mediapipe pose class.
+
+# server = "mqtt.eclipseprojects.io"
+
+# conn = comms.mqttCommunicator(server, {})
+
+# #conn.send_command("volumeUp")
+
+# # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
  
-# Setting up the Pose function.
+# # Setting up the Pose function.
 pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_complexity=2)
  
-# Initializing mediapipe drawing class, useful for annotation.
+# # Initializing mediapipe drawing class, useful for annotation.
 mp_drawing = mp.solutions.drawing_utils
 
-#setup pose function for video
+# #setup pose function for video
 pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
 
 def detectPose(image, pose, draw=False, display=True):
@@ -144,12 +151,15 @@ def checkpose(landmarks, output_image, display=False):
     #here we will calculate the required angles
 
     #calculate angles required for psy pose
+    #for a psy pose we need both arm angles to be at 90 degrees
     left_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value], landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
     right_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value], landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value])
 
     #here we will calculate the distance between two landmarks
 
     #calculate euclidean distances required for dab pose
+    #the dab pose needs the nose to be close to the elbow
+    #and there be a sizeable distance between both hands
     nose_landmark = landmarks[mp_pose.PoseLandmark.NOSE.value]
     left_elbow_landmark = landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value]
     right_elbow_landmark = landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value]
@@ -160,18 +170,46 @@ def checkpose(landmarks, output_image, display=False):
     right_nose_distance = int(hypot(right_elbow_landmark[0] - nose_landmark[0], right_elbow_landmark[1] - nose_landmark[1]))
     wrist_distance = int(abs(left_wrist_landmark[1] - right_wrist_landmark[1]))
 
+    #the hands together pose
+    #requires both hand landmarks to be close to each other
+    hands_distance = int(hypot(left_wrist_landmark[0] - right_wrist_landmark[0], left_wrist_landmark[1] - right_wrist_landmark[1]))
+
+    #the t-pose
+    #check if both arms are straight and both shoulders are straight and both legs are straight
+    #uses the left elbow andgle and right elbow angle
+    left_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value], landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value], landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value])
+    right_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value], landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
+    left_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
+                                         landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
+                                         landmarks[mp_pose.PoseLandmark.LEFT_HIP.value])
+    right_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value],
+                                          landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
+                                          landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
     #here we will check for what pose it could be
+    #current hierarchy of poses
+    #left dab -> right dab -> psy -> hands_together -> t-pose
     if wrist_distance > 50:
-        print(wrist_distance)
-        if left_nose_distance < 200:
+        if right_nose_distance < 100:
             label = 'left dab'
             color = (0,255,0)
-        elif right_nose_distance < 200:
+        elif left_nose_distance < 100:
             label = 'right dab'
             color = (0,255,0)
     elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250):
         label = 'psy pose'
         color = (0,255,0)
+    elif hands_distance < 80:
+        label = 'hands together'
+        color = (0,255,0)
+    elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
+        if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle < 110 and right_knee_angle > 10:
+            label = 'T-pose'
+            color = (0,255,0)
+        elif left_knee_angle > 70 and left_knee_angle < 110 and right_knee_angle < 110 and right_knee_angle > 70:
+            label = 'sumo'
+            color = (0,255,0)
+        print(left_knee_angle)
+        print(right_knee_angle)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
@@ -188,57 +226,59 @@ def checkpose(landmarks, output_image, display=False):
         # Return the output image and the classified label.
         return output_image, label
 
-# Initialize the VideoCapture object to read from the webcam.
-camera_video = cv2.VideoCapture(0)
+# # Initialize the VideoCapture object to read from the webcam.
+# camera_video = cv2.VideoCapture(0)
 
-# Initialize a resizable window.
-cv2.namedWindow('All Together Pose', cv2.WINDOW_NORMAL)
+# # Initialize a resizable window.
+# cv2.namedWindow('All Together Pose', cv2.WINDOW_NORMAL)
  
-# Iterate until the webcam is accessed successfully.
-while camera_video.isOpened():
+# # Iterate until the webcam is accessed successfully.
+# while camera_video.isOpened():
     
-    # Read a frame.
-    ok, frame = camera_video.read()
+#     # Read a frame.
+#     ok, frame = camera_video.read()
     
-    # Check if frame is not read properly.
-    if not ok:
+#     # Check if frame is not read properly.
+#     if not ok:
         
-        # Continue to the next iteration to read the next frame and ignore the empty camera frame.
-        continue
+#         # Continue to the next iteration to read the next frame and ignore the empty camera frame.
+#         continue
     
-    # Flip the frame horizontally for natural (selfie-view) visualization.
-    frame = cv2.flip(frame, 1)
+#     # Flip the frame horizontally for natural (selfie-view) visualization.
+#     frame = cv2.flip(frame, 1)
     
-    # Get the width and height of the frame
-    frame_height, frame_width, _ =  frame.shape
+#     # Get the width and height of the frame
+#     frame_height, frame_width, _ =  frame.shape
     
-    # Resize the frame while keeping the aspect ratio.
-    frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
-    
-    
-    # Perform Pose landmark detection.
-    frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
+#     # Resize the frame while keeping the aspect ratio.
+#     frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
     
     
-    # Check if the landmarks are detected.
-    if landmarks:
+#     # Perform Pose landmark detection.
+#     frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
+    
+    
+#     # Check if the landmarks are detected.
+#     if landmarks:
         
-        # Perform the Pose Classification.
-        frame, _ = checkpose(landmarks, frame, display=False)
+#         # Perform the Pose Classification.
+#         frame, curr_pose = checkpose(landmarks, frame, display=False)
     
-
-    # Display the frame.
-    cv2.imshow('Pose Classification', frame)
+#     if curr_pose != 'Unknown Pose':
+#         conn.send_command("volumeUp")
     
-    # Wait until a key is pressed.
-    # Retreive the ASCII code of the key pressed
-    k = cv2.waitKey(1) & 0xFF
+#     # Display the frame.
+#     cv2.imshow('Pose Classification', frame)
     
-    # Check if 'ESC' is pressed.
-    if(k == 27):
+#     # Wait until a key is pressed.
+#     # Retreive the ASCII code of the key pressed
+#     k = cv2.waitKey(1) & 0xFF
+    
+#     # Check if 'ESC' is pressed.
+#     if(k == 27):
         
-        # Break the loop.
-        break
+#         # Break the loop.
+#         break
  
-# Release the VideoCapture object and close the windows.
-camera_video.release()
+# # Release the VideoCapture object and close the windows.
+# camera_video.release()
