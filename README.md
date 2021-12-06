@@ -17,6 +17,11 @@ Uses Google Cloud Speech-to-Text to detect keywords for specific voice commands.
 
 Directory: `speech`
 
+## Communications
+Communication interface for the two Raspberry Pis and laptop to talk to one another and the TV. Uses MQTT publisher/subscriber model.
+
+Directory: `comms`
+
 ## GUI
 Graphical user interface created with TKinter to help the user orient themselves with the product. Includes video tutorials of how to use the product.
 
