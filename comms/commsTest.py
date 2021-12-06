@@ -18,7 +18,7 @@ test2 = comms.mqttCommunicator(server, testTable)
 time.sleep(3)
 
 test1.send_command("power")
-time.sleep(8)
+time.sleep(12)
 test1.send_command("volumeUp")
 time.sleep(2)
 test1.send_command("volumeDown")
