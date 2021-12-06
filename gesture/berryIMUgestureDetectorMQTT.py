@@ -25,6 +25,32 @@ import datetime
 import os
 
 
+
+import paho.mqtt.client as mqtt
+import numpy as np
+
+def on_connect(client, userdata, flags, rc):
+	print("Connection returned result: " + str(rc))
+
+def on_disconnect(client, userdata, rc):
+	if rc != 0:
+		print('Unexpected Disconnect')
+	else:
+		print('Expected Disconnect')
+
+def on_message(client, userdata, message):
+	print('Received message: "' + str(message.payload) + '" on topic "' + message.topic + '" with QoS ' + str(message.qos))
+
+client = mqtt.Client()
+
+client.on_connect = on_connect
+client.on_disconnect = on_disconnect
+client.on_message = on_message
+
+client.connect_async('mqtt.eclipseprojects.io')
+
+client.loop_start()
+
 RAD_TO_DEG = 57.29578
 M_PI = 3.14159265358979323846
 G_GAIN = 0.070          # [deg/s/LSB]  If you change the dps for gyro, you need to update this value accordingly
@@ -527,4 +553,12 @@ while True:
 
     #slow program down a bit, makes the output more readable
     time.sleep(0.03)
+    
+    
+
+    client.publish('ece180d/team1', '101', qos=1)
+
+
+client.loop_stop()
+client.disconnect()
 
