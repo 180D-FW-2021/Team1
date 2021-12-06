@@ -167,11 +167,21 @@ def checkpose(landmarks, output_image, display=False):
     #requires both hand landmarks to be close to each other
     hands_distance = int(hypot(left_wrist_landmark[0] - right_wrist_landmark[0], left_wrist_landmark[1] - right_wrist_landmark[1]))
 
+    #the t-pose
+    #check if both arms are straight and both shoulders are straight and both legs are straight
+    #uses the left elbow andgle and right elbow angle
+    left_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value], landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value], landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value])
+    right_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value], landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
+    left_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
+                                         landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
+                                         landmarks[mp_pose.PoseLandmark.LEFT_HIP.value])
+    right_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value],
+                                          landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
+                                          landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
     #here we will check for what pose it could be
     #current hierarchy of poses
-    #left dab -> right dab -> psy -> hands_together
+    #left dab -> right dab -> psy -> hands_together -> t-pose
     if wrist_distance > 50:
-        print(wrist_distance)
         if left_nose_distance < 200:
             label = 'left dab'
             color = (0,255,0)
@@ -181,9 +191,13 @@ def checkpose(landmarks, output_image, display=False):
     elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250):
         label = 'psy pose'
         color = (0,255,0)
-    elif hands_distance < 130:
+    elif hands_distance < 80:
         label = 'hands together'
         color = (0,255,0)
+    elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
+        if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle < 195 and right_knee_angle > 160:
+            label = 'T-pose'
+            color = (0,255,0)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
