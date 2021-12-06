@@ -195,9 +195,14 @@ def checkpose(landmarks, output_image, display=False):
         label = 'hands together'
         color = (0,255,0)
     elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
-        if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle < 195 and right_knee_angle > 160:
+        if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle < 110 and right_knee_angle > 10:
             label = 'T-pose'
             color = (0,255,0)
+        elif left_knee_angle > 70 and left_knee_angle < 110 and right_knee_angle < 110 and right_knee_angle > 70:
+            label = 'sumo'
+            color = (0,255,0)
+        print(left_knee_angle)
+        print(right_knee_angle)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
