@@ -12,6 +12,14 @@ import math
 import mediapipe as mp
 import numpy as np
 import matplotlib.pyplot as plt
+import comms.comms as comms
+
+
+server = "mqtt.eclipseprojects.io"
+
+conn = comms.mqttCommunicator(server, {})
+
+#conn.send_command("volumeUp")
 
 # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -255,9 +263,11 @@ while camera_video.isOpened():
     if landmarks:
         
         # Perform the Pose Classification.
-        frame, _ = checkpose(landmarks, frame, display=False)
+        frame, curr_pose = checkpose(landmarks, frame, display=False)
     
-
+    if curr_pose != 'Unknown Pose':
+        conn.send_command("volumeUp")
+    
     # Display the frame.
     cv2.imshow('Pose Classification', frame)
     
