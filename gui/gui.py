@@ -4,6 +4,7 @@ import tkinter as tk, threading
 import imageio
 import time
 import sys, os
+import subprocess
 from PIL import Image, ImageTk
 from playsound import playsound
 
@@ -50,9 +51,12 @@ def reset():
 
 def launch_cv():
     sys.stdout.flush()
-    os.execl(sys.executable,
-    "../pose_detection_code/togther.py",
-    "../pose_detection_code/together.py")
+    subprocess.call("./launch.sh")
+
+def stop_controller():
+    sys.stdout.flush()
+    subprocess.call("./kill.sh")
+    os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
 
 root = tk.Tk()
 root.geometry('1200x800')
@@ -111,12 +115,17 @@ volume_down = tk.Button(root, text="Volume Down",
         width=25, font=("Helvetica", 14), command=lambda:
         play_video("vol-down")).place(x=900, rely=0.40, anchor='w')
 
-start_controller = tk.Label(root, text="Start Controller", font=("Helvetica",
+controller = tk.Label(root, text="Controller", font=("Helvetica",
     18)).place(relx=0.5, rely=0.55,anchor='center')
 
-start_camera = tk.Button(root, text="Start Camera",
+start_controller = tk.Button(root, text="Start Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=launch_cv).place(x=717,
+        width=25, font=("Helvetica", 14), command=launch_cv).place(x=417,
                 rely=0.70, anchor='e')
+
+stop_controller = tk.Button(root, text="Stop Controller",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=stop_controller).place(x=717,
+                rely=0.70, anchor='w')
 
 root.mainloop()
