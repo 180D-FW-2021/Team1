@@ -37,7 +37,7 @@ Download all the files contained within our repo onto two Raspberry Pis and a co
 
 Run IMUpi.py on one Raspberry Pi which is hooked up to a BerryIMU.
 
-Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter interface. 
+Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter. 
 
 Run gui.py on a computer with both a webcam and microphone. 
 
