@@ -15,9 +15,22 @@ test1 = comms.mqttCommunicator(server, testTable)
 
 test2 = comms.mqttCommunicator(server, testTable)
 
-time.sleep(10)
+time.sleep(3)
 
+test1.send_command("power")
+time.sleep(8)
 test1.send_command("volumeUp")
+time.sleep(2)
+test1.send_command("volumeDown")
+time.sleep(2)
+test1.send_command("channelUp")
+time.sleep(2)
+test1.send_command("channelDown")
+
+
 
 while(1):
+    time.sleep(2)
+    test1.send_command("volumeUp")
+
     pass

@@ -1,4 +1,3 @@
-
 import time
 import comms.comms as comms
 import os
@@ -14,12 +13,13 @@ lircClient = lirc.Client(
   )
 )
 
-remote = "UR5U-8790L-TWC"
+remote = "sharp"
+#remote = "UR5U-8790L-TWC"
 
 
 
 def command(str):
-    command = "timeout -s SIGINT 0.3 irsend SEND_ONCE UR5U-8790L-TWC " + str
+    command = "timeout -s SIGINT 0.3 irsend SEND_ONCE " + remote + " " + str
     os.system(command)
     #lircClient.send_once(remote, str)
     print("Recieved a " + str + ", running ")
