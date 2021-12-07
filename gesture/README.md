@@ -1,6 +1,6 @@
 ## Credits
 
-The BerryIMU code which gathers the sensor information is adapted from http://github.com/ozzmaker/BerryIMU.git.
+All of the code in this directory which gathers sensor information from the BerryIMU is adapted from http://github.com/ozzmaker/BerryIMU.git.
 
 ## Information and Statistics
 
