@@ -2,6 +2,8 @@
 
 All of the code in this directory which gathers sensor information from the BerryIMU is adapted from http://github.com/ozzmaker/BerryIMU.git.
 
+This portion of the project was Sierra's responsibility.
+
 ## Information and Statistics
 
 This code gathers a bunch of data from the BerryIMU sensors, sets arbitrary thresholds to detect when certain gestures are executed, and sends MQTT messages to our server with which gesture was detected. There are various flags to detect when a gesture was just made so as to prevent the detection of its opposite gesture within a certain time frame, as many gestures require the Pi to be put back in its original position after. 
