@@ -2,11 +2,6 @@
 
 Being forced to get up and get the remote to just change the volume is a hassle for households that use a TV. To fix this very serious issue we have decided to prototype AirController, a system that can take in hand gestures as inputs and accordingly modify the volume. In this case, the user can make a specific gesture using their hand/arm in order to utilize a specific control option on the TV. This way those who are disabled or are not within reach of a remote can use their hands to access controls.
 
-## Gesture Recognition
-Uses a programmed BerryIMU to detect specific hand motions. Uses MQTT to communicate detected gestures to the subscriber Raspberry Pi.
-
-Directory: `gesture`
-
 ## Pose Recognition (OpenCV and MediaPipe)
 Uses computer vision and image processing to detect specific body positions and poses. Uses MQTT to communicate detected poses to the subscriber Raspberry Pi.
 
@@ -17,15 +12,20 @@ Uses Google Cloud Speech-to-Text to detect keywords for specific voice commands.
 
 Directory: `speech`
 
-## Communications
-Communication interface for the two Raspberry Pis and laptop to talk to one another and the TV. Uses MQTT publisher/subscriber model.
+## Gesture Recognition
+Uses a programmed BerryIMU to detect specific hand motions. Uses MQTT to communicate detected gestures to the subscriber Raspberry Pi.
 
-Directory: `comms`
+Directory: `gesture`
 
 ## GUI
 Graphical user interface created with TKinter to help the user orient themselves with the product. Includes video tutorials of how to use the product. Launches the speech recognition and pose recognition modules on the user's computer.
 
 Directory: `gui`
+
+## Communications
+Communication interface for the two Raspberry Pis and laptop to talk to one another and the TV. Uses MQTT publisher/subscriber model.
+
+Directory: `comms`
 
 ## Demonstration
 Demonstrations of our individual subcomponents of our projects working.
@@ -37,7 +37,7 @@ Download all the files contained within our repo onto two Raspberry Pis and a co
 
 Run IMUpi.py on one Raspberry Pi which is hooked up to a BerryIMU.
 
-Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter. 
+Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter set up next to a TV's IR receiver. 
 
 Run gui.py on a computer with both a webcam and microphone. 
 
