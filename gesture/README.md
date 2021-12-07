@@ -20,6 +20,8 @@ Channel down: 85%
 
 Channel up: 90%
 
+More statistics can be found in `gesture_data_report.pdf` in this directory. Raw testing data can be found within `gesture_data.zip`.
+
 Recognition of power off in particular is buggy due to it continually recognizing the gesture as power on due to needing to lift the Pi first in order to flick it down. However, since power on/off are actually the same MQTT command "power," this may not actually matter. I will review this more next quarter.
 
 Volume up/down both are buggy in that they often register as one another instead of themselves. The reason for this is the degree to which I angle the Pi while attempting to get the gesture to register. Perhaps lowering the threshold will help.
