@@ -43,6 +43,14 @@ Run gui.py (contained within the `gui` directory) on a computer with both a webc
 
 The two Raspberry Pis will communicate with each other. The computer will communicate with the Raspi running mainPi.py. The Raspi running mainPi.py will then communicate with the TV to actually be able to implement our remote. The user will be able to use gesture commands on the Raspi running IMUpi.py, or webcam-based/voice-based commands on the computer. The computer's GUI will also provide a tutorial of how to use the Raspi gesture system, as well as serve as the way for the user to launch the webcam and voice modules. The voice module has some further requirements currently with getting a key from Google to be able to use it.
 
+Controls:
+
+Pose (Webcam) - 
+
+Speech - 
+
+Gesture (BerryIMU) - possible gestures include tilt right (volume up), tilt left (volume down), flick right (channel up), flick left (channel down), flick up (power on), and flick down (power off). The BerryIMU should be facing forward and parallel to the ground as its neutral position. For a visual explanation, launch gui.py and view the tutorial videos.
+
 ## Credits
 
 Developed by Steven Chu, Maksym Prokopovych, Sierra Rose, and Isaac Xu.
