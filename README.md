@@ -32,7 +32,7 @@ Demonstrations of our individual subcomponents of our projects working.
 
 Directory: `demonstration_videos`
 
-## How to Use
+## Download & Set-Up
 Download all the files contained within our repo onto two Raspberry Pis and a computer with a webcam. 
 
 Run IMUpi.py on one Raspberry Pi which is hooked up to a BerryIMU.
@@ -43,7 +43,7 @@ Run gui.py (contained within the `gui` directory) on a computer with both a webc
 
 The two Raspberry Pis will communicate with each other. The computer will communicate with the Raspi running mainPi.py. The Raspi running mainPi.py will then communicate with the TV to actually be able to implement our remote. The user will be able to use gesture commands on the Raspi running IMUpi.py, or webcam-based/voice-based commands on the computer. The computer's GUI will also provide a tutorial of how to use the Raspi gesture system, as well as serve as the way for the user to launch the webcam and voice modules. The voice module has some further requirements currently with getting a key from Google to be able to use it.
 
-Controls:
+## Controls
 
 Pose (Webcam) - 
 
