@@ -47,12 +47,12 @@ The two Raspberry Pis will communicate with each other. The computer will commun
 
 Developed by Steven Chu, Maksym Prokopovych, Sierra Rose, and Isaac Xu.
 
-IMUpi.py: this file, and others in the `gesture` subdirectory, are adapted from http://github.com/ozzmaker/BerryIMU.git. 
+IMUpi.py: this file, and others in the `gesture` directory, are adapted from http://github.com/ozzmaker/BerryIMU.git. 
 
-mainPi.py: this file, and others in the `comms` subdirectory, are adapted from lab 3.
+mainPi.py: this file, and others in the `comms` directory, are adapted from lab 3.
 
-pose.py: this file, and others in the `pose_detection_code` subdirectory, are adapted from lab 1. 
+pose.py: this file, and others in the `pose_detection_code` directory, are adapted from lab 1 as well as various online sources, which are further referenced in the README of the `pose_detection_code` directory. 
 
-speech_processing.py: this file, and others in the `speech` subdirectory, are adapted from lab 4.
+speech_processing.py: this file, and others in the `speech` directory, are adapted from lab 4.
 
-Further credits can be found in the READMEs of each subdirectory.
+Further credits can be found in the READMEs of each directory.
