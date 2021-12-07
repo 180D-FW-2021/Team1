@@ -51,4 +51,8 @@ IMUpi.py: this file, and others in the `gesture` subdirectory, are adapted from 
 
 mainPi.py: this file, and others in the `comms` subdirectory, are adapted from lab 3.
 
+pose.py: this file, and others in the `pose_detection_code` subdirectory, are adapted from lab 1. 
+
+speech_processing.py: this file, and others in the `speech` subdirectory, are adapted from lab 4.
+
 Further credits can be found in the READMEs of each subdirectory.
