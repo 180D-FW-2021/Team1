@@ -28,5 +28,5 @@ Volume up/down both are buggy in that they often register as one another instead
 
 Channel down/up appear to work well, but more testing will be done to see if I can get accuracy above 95%.
 
-In the main directory, IMUpi.py is the actual file to run in order to use the files within this directory. None of these files should be executed directly.
+## In the main directory, IMUpi.py is the actual file to run in order to use the files within this directory. None of these files should be executed directly.
 
