@@ -37,3 +37,6 @@ Pose Detect.mp4
 
 pose_detection trials.mkv
   - all the trials done to detect if there was any errors when detecting poses 
+
+dependencies.txt
+  - a list of all the dependencies Isaac's virtual environment uses to run pose detection code
