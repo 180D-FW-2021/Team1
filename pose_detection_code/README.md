@@ -30,3 +30,10 @@ poses.txt
   
 together.py
   - posture detection code that detects a right or left dab, arms at 90 degrees, hands placed together, a T-pose, and both arms straight and legs at 90 degrees
+
+Pose Detect.mp4
+  - posture detection code in action, showing that dabs change the volume, and a hands-together and T-pose "presses" the power button
+  - having both arms at 90 degree angle, or having both arms straight while legs are at a 90 degree angle would change the channel up and down, but that T.V didn't have any channels to change. The signal was still sent to the mqtt.
+
+pose_detection trials.mkv
+  - all the trials done to detect if there was any errors when detecting poses 
