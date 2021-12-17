@@ -45,7 +45,8 @@ The two Raspberry Pis will communicate with each other. The computer will commun
 
 ## Controls
 
-Pose (Webcam) - 
+Pose (Webcam) - current poses include a right dab (volume up), left dab (volume down), both arms at a 90 degree angle (channel up), both hands together (power), both arms straight and body straight (power), and both arms straight and both legs at a 90 degree angle (channel down). The webcam must properly recognize the user first for it to start working. 
+Note: when the camera freezes for a bit, that's ok, since the code is made such that the program sleeps for 1 - 5 seconds before trying to recognize another pose, so that there won't be an overflow error.
 
 Speech - 
 
