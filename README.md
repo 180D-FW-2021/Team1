@@ -5,6 +5,8 @@ Being forced to get up and get the remote to just change the volume is a hassle 
 ## Pose Recognition (OpenCV and MediaPipe)
 Uses computer vision and image processing to detect specific body positions and poses. Uses MQTT to communicate detected poses to the subscriber Raspberry Pi.
 
+Folder: sample_poses show images of sample poses that are to be detected from the AirController.
+
 Directory: `pose_detection_code`
 
 ## Speech Recognition
