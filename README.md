@@ -53,7 +53,7 @@ Pose (Webcam) - current poses include a right dab (volume up), left dab (volume 
 Note: when the camera freezes for a bit, that's ok, since the code is made such that the program sleeps for 1 - 5 seconds before trying to recognize another pose, so that there won't be an overflow error.
 For more detail in pose detection, look through the poses.txt file in pose_detection_code folder.
 
-Speech - 
+Speech - currently supports keyword detection for "volume", "channel", and "power". To adjust volume, say any combination of "volume" and "up/down". To adjust channel, say any combination of "channel" and "up/down". To turn the TV on or off, say any combination of "power" and "on/off".
 
 Gesture (BerryIMU) - possible gestures include tilt right (volume up), tilt left (volume down), flick right (channel up), flick left (channel down), flick up (power on), and flick down (power off). The BerryIMU should be facing forward and parallel to the ground as its neutral position. For a visual explanation, launch gui.py and view the tutorial videos.
 
