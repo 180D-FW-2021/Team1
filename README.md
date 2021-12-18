@@ -45,6 +45,8 @@ Run gui.py (contained within the `gui` directory) on a computer with both a webc
 
 The two Raspberry Pis will communicate with each other. The computer will communicate with the Raspi running mainPi.py. The Raspi running mainPi.py will then communicate with the TV to actually be able to implement our remote. The user will be able to use gesture commands on the Raspi running IMUpi.py, or webcam-based/voice-based commands on the computer. The computer's GUI will also provide a tutorial of how to use the Raspi gesture system, as well as serve as the way for the user to launch the webcam and voice modules. The voice module has some further requirements currently with getting a key from Google to be able to use it.
 
+Dependencies used for pose detection can be found in the dependencies.txt file in pose_detection_code folder.
+
 ## Controls
 
 Pose (Webcam) - current poses include a right dab (volume up), left dab (volume down), both arms at a 90 degree angle (channel up), both hands together (power), both arms straight and body straight (power), and both arms straight and both legs at a 90 degree angle (channel down). The webcam must properly recognize the user first for it to start working. 
