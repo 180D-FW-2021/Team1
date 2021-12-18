@@ -4,9 +4,22 @@ Contains LIRC config files that work, sharp.conf works for the Sharp TV we teste
 
 How to use: Instal LIRC, can use apt if on a Debian-type Linux with apt install lirc.
 
-Configure the proper pins in /boot/config.txt if using raspberrian, uncommenting the gpio-tx lines from the default config.txt.
+Following instructions for raspbian. Using pins 22 for output here, change as needed.
+
+Uncomment/append "dtoverlay=lirc-rpi,gpio_in_pin=23,gpio_out_pin=22" to /boot/config.txt
+
+Append 
+
+>lirc_dev
+>lirc_rpi gpio_in_pin=23 gpio_out_pin=22
+
+To /etc/modules.
+
+/etc/lircd/hardware.conf should be setup already, if not consult the below link
 
 Place these config files in /etc/lircd/lircd.conf.d/
+
+Reboot Pi.
 
 Run command irsend SEND_ONCE \<REMOTENAME\> \<command\> to issue IR signal. 
 
