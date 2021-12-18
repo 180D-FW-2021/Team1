@@ -30,6 +30,8 @@ poses.txt
   
 together.py
   - posture detection code that detects a right or left dab, arms at 90 degrees, hands placed together, a T-pose, and both arms straight and legs at 90 degrees
+  - sends it to poses.py in the main folder so that the command corresponding to the pose is executed
+  - CURRENT: does not generate a webcam that lets the user see what pose is being identified/the webcam view
 
 Pose Detect.mp4
   - posture detection code in action, showing that dabs change the volume, and a hands-together and T-pose "presses" the power button
@@ -45,3 +47,17 @@ dependencies.txt
   Where Isaac got the code from 
   - https://bleedai.com/introduction-to-pose-detection-2/
   - https://bleedai.com/introduction-to-pose-detection-and-basic-pose-classification/
+
+## Known Bugs
+- sometimes together.py detects the wrong pose, or may sometimes not identify a person within view
+- 
+
+## Improvements
+- make detection code more robust so that there won't be any misidentification of a pose
+- make list of poses better such that they are aimed at disabled people (i.e not require use of legs or arms)
+- organize list of dependencies (current list is 300 above dependencies)
+
+## Decisions MAde
+- use OpenCV, Mediapipe because others (openpose, blazepose) weren't able to be ran
+- this was the default
+- current list of poses used because they are easily identifiable and easily done by majority of people
