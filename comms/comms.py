@@ -8,7 +8,7 @@ class mqttCommunicator:
 
     topic = 'ece180d/team1'
 
-    def __init__(self, server : str, actionTable: dict): #action table is a string -> function dictionary
+    def __init__(self, server : str, actionTable): #action table is a string -> function dictionary
         self.actionTable = actionTable
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect

@@ -552,14 +552,14 @@ while True:
         counter_flicked_down = 1
         FD_detection_counter = FD_detection_counter + 1
         outputString += "\tFLICK DOWN DETECTED"
-        if (FD_detection_counter >= 5):
+        if (FD_detection_counter >= 8):
             mqtt_send_flag = 1
     if(difference_gyro_X < -40 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0):
         just_flicked_up_flag = 1
         counter_flicked_up = 1
         FU_detection_counter = FU_detection_counter + 1
         outputString += "\tFLICK UP DETECTED"
-        if (FU_detection_counter >= 5):
+        if (FU_detection_counter >= 8):
             mqtt_send_flag = 1
 
 
@@ -585,22 +585,22 @@ while True:
                 #TL_detection_counter = 0
                 #TR_detection_counter = 0 
             if(TR_detection_counter >= 3):
-                outputString += ""
+                outputString += "\tSEND \"TURN RIGHT\" MQTT SIGNAL"
                 conn.send_command("volumeUp")
                 #TR_detection_counter = 0
                 #TL_detection_counter = 0
             if(FL_detection_counter >= 5):
-                outputString += ""
+                outputString += "\tSEND \"FLICK LEFT\" MQTT SIGNAL"
                 conn.send_command("channelDown")
             if(FR_detection_counter >= 5):
-                outputString += ""
+                outputString += "\tSEND \"FLICK RIGHT\" MQTT SIGNAL"
                 conn.send_command("channelUp")
             if(FD_detection_counter >= 5):
-                conn.send_command("powerOff")
-                outputString += ""
+                conn.send_command("power")
+                outputString += "\tSEND \"FLICK DOWN\" MQTT SIGNAL"
             if(FU_detection_counter >= 5):
-                conn.send_command("powerOn")
-                outputString += ""
+                conn.send_command("power")
+                outputString += "\tSEND \"FLICK UP\" MQTT SIGNAL"
             #mqtt_counter = 0 #placeholder line
 
         mqtt_counter = mqtt_counter + 1
