@@ -25,7 +25,7 @@ Graphical user interface created with TKinter to help the user orient themselves
 Directory: `gui`
 
 ## Communications
-Communication interface for the two Raspberry Pis and laptop to talk to one another and the TV. Uses MQTT publisher/subscriber model.
+Communication interface for the two Raspberry Pis and laptop to talk to one another and the TV. Uses MQTT publisher/subscriber model. Requires paho-mqtt Python library.
 
 Directory: `comms`
 
@@ -39,7 +39,7 @@ Download all the files contained within our repo onto two Raspberry Pis and a co
 
 Run IMUpi.py on one Raspberry Pi which is hooked up to a BerryIMU.
 
-Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter set up next to a TV's IR receiver. 
+Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter set up next to a TV's IR receiver. Requires LIRC to be installed, along with some TV remote configuation files
 
 Run gui.py (contained within the `gui` directory) on a computer with both a webcam and microphone. 
 
