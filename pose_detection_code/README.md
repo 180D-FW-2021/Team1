@@ -40,3 +40,8 @@ pose_detection trials.mkv
 
 dependencies.txt
   - a list of all the dependencies Isaac's virtual environment uses to run pose detection code
+
+## Code tags
+  Where Isaac got the code from 
+  - https://bleedai.com/introduction-to-pose-detection-2/
+  - https://bleedai.com/introduction-to-pose-detection-and-basic-pose-classification/
