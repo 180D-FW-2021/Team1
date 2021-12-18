@@ -9,3 +9,5 @@ Configure the proper pins in /boot/config.txt if using raspberrian, uncommenting
 Place these config files in /etc/lircd/lircd.conf.d/
 
 Run command irsend SEND_ONCE \<REMOTENAME\> \<command\> to issue IR signal. 
+
+Primarily adapted from: https://www.hackster.io/austin-stanton/creating-a-raspberry-pi-universal-remote-with-lirc-2fd581
