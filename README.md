@@ -63,7 +63,7 @@ Developed by Steven Chu, Maksym Prokopovych, Sierra Rose, and Isaac Xu.
 
 IMUpi.py: this file, and others in the `gesture` directory, are adapted from http://github.com/ozzmaker/BerryIMU.git. 
 
-mainPi.py: this file, and others in the `comms` directory, are adapted from lab 3.
+mainPi.py: this file, and others in the `comms` directory, are adapted from lab 3. Configuring LIRC adapted from https://www.hackster.io/austin-stanton/creating-a-raspberry-pi-universal-remote-with-lirc-2fd581
 
 pose.py: this file, and others in the `pose_detection_code` directory, are adapted from lab 1 as well as various online sources, which are further referenced in the README of the `pose_detection_code` directory. Also adapted from https://bleedai.com/, specifically https://bleedai.com/introduction-to-pose-detection-2/ and https://bleedai.com/introduction-to-pose-detection-and-basic-pose-classification/
 
