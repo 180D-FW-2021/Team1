@@ -5,7 +5,8 @@ Current Poses:
     Dab_Detection: distance between elbow and nose landmark < 100; distance between left and \
         right hand landmarks >50
     Hands_Together: distance between hand landmarks < 50
-    T-Pose: arms at 180 degrees 
+    T-Pose: arms at 180 degrees and legs completely straight (180 degrees)
     PSY Style: both arms at 90 degrees
-    warrior II pose: in check_three_pose.py
-    Tree pose: in check_three_pose.py
+    warrior II pose: in check_three_pose.py (currently unused)
+    Tree pose: in check_three_pose.py (currently unused)
+    Sumo pose: angle of knees at 90 degrees, and arms at 180 degrees
