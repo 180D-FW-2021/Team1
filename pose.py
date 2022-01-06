@@ -27,10 +27,16 @@ camera_video = cv2.VideoCapture(0)
 
 # Initialize a resizable window.
 cv2.namedWindow('All Together Pose', cv2.WINDOW_NORMAL)
- 
+
+# Initialize a counter that keeps track of the time of the commands implemented
+prev_time_counter = 0
+curr_time_counter = 0
+
 # Iterate until the webcam is accessed successfully.
 while camera_video.isOpened():
     
+    curr_time_counter = time.monotonic()
+
     # Read a frame.
     ok, frame = camera_video.read()
     
@@ -49,7 +55,6 @@ while camera_video.isOpened():
     # Resize the frame while keeping the aspect ratio.
     frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
     
-    
     # Perform Pose landmark detection.
     frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
     
@@ -61,22 +66,33 @@ while camera_video.isOpened():
         # Perform the Pose Classification.
         frame, curr_pose = checkpose(landmarks, frame, display=False)
     
-    if curr_pose == 'right dab':
-        conn.send_command("volumeUp")
-        time.sleep(1)
-    elif curr_pose == 'left dab':
-        conn.send_command("volumeDown")
-        time.sleep(1)
-    elif curr_pose == 'sumo':
-        conn.send_command("channelDown")
-        time.sleep(1)
-    elif curr_pose == 'psy pose':
-        conn.send_command("channelUp")
-        time.sleep(1)
-    elif curr_pose == 'hands together' or curr_pose == 'T-pose':
-        conn.send_command("power")
-        time.sleep(5)
+    #calculate the total time difference between the previous command when it was activated and the current time
+    time_difference = curr_time_counter - prev_time_counter
+    
+    #create a counter that keeps track of whether a command was sent
+    pose_counter = 0
 
+    if time_difference >= 1:
+        if curr_pose == 'right dab':
+            conn.send_command("volumeUp")
+            pose_counter = 1
+        elif curr_pose == 'left dab':
+            conn.send_command("volumeDown")
+            pose_counter = 1
+        elif curr_pose == 'sumo':
+            conn.send_command("channelDown")
+            pose_counter = 1
+        elif curr_pose == 'psy pose':
+            conn.send_command("channelUp")
+            pose_counter = 1
+    if time_difference >= 5:
+        if curr_pose == 'hands together' or curr_pose == 'T-pose':
+            conn.send_command("power")
+            pose_counter = 1
+
+    #update the previous time counter
+    if pose_counter == 1:
+        prev_time_counter = curr_time_counter
 
     #if a dab has been detected, record that time
     #then if another dab is detected, compare that with the previous time
