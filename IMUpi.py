@@ -434,13 +434,13 @@ while True:
 ###########################LEFT/RIGHT TURNS#############################
 
     #detect left/right turns
-    if (AccYangle > 70):
+    if (AccYangle > 70 and just_turned_right_flag == 0):
         TL_detection_counter = TL_detection_counter + 1
         outputString += "LEFT TURN DETECTED!\t"
         just_turned_left_flag = 1
         if (TL_detection_counter >= 3):
             mqtt_send_flag = 1
-    if(AccYangle < -70):
+    if(AccYangle < -70 and just_turned_left_flag == 0):
         TR_detection_counter = TR_detection_counter + 1
         outputString += "RIGHT TURN DETECTED!\t"
         just_turned_right_flag = 1
@@ -452,11 +452,11 @@ while True:
     if(just_turned_right_flag):
         counter_turned_right = counter_turned_right + 1
 
-    if(counter_turned_left >= 15):
+    if(counter_turned_left >= 10):
         counter_turned_left = 0
         TL_detection_counter = 0
         just_turned_left_flag = 0
-    if(counter_turned_right >= 15):
+    if(counter_turned_right >= 10):
         counter_turned_right = 0
         TR_detection_counter = 0
         just_turned_right_flag = 0
