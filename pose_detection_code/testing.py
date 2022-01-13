@@ -4,7 +4,7 @@
 #combine both types, i.e the list and the pure thing?
 #think about it later
 
-from time import time
+import time
 from math import hypot
 
 import cv2
@@ -12,13 +12,6 @@ import math
 import mediapipe as mp
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-# server = "mqtt.eclipseprojects.io"
-
-# conn = comms.mqttCommunicator(server, {})
-
-# #conn.send_command("volumeUp")
 
 # # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -31,6 +24,10 @@ mp_drawing = mp.solutions.drawing_utils
 
 # #setup pose function for video
 pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
+
+# Initialize a counter that keeps track of the time of the commands implemented
+prev_time_counter = 0
+curr_time_counter = 0
 
 def detectPose(image, pose, draw=False, display=True):
     '''
@@ -235,6 +232,8 @@ cv2.namedWindow('All Together Pose', cv2.WINDOW_NORMAL)
 # Iterate until the webcam is accessed successfully.
 while camera_video.isOpened():
     
+    curr_time_counter = time.monotonic()
+
     # Read a frame.
     ok, frame = camera_video.read()
     
@@ -244,7 +243,7 @@ while camera_video.isOpened():
         # Continue to the next iteration to read the next frame and ignore the empty camera frame.
         continue
     
-   # Flip the frame horizontally for natural (selfie-view) visualization.
+    # Flip the frame horizontally for natural (selfie-view) visualization.
     frame = cv2.flip(frame, 1)
     
     # Get the width and height of the frame
@@ -257,12 +256,27 @@ while camera_video.isOpened():
     # Perform Pose landmark detection.
     frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
     
-    
+    #calculate the total time difference between the previous command when it was activated and the current time
+    time_difference = curr_time_counter - prev_time_counter
+
     # Check if the landmarks are detected.
     if landmarks:
         
         # Perform the Pose Classification.
         frame, curr_pose = checkpose(landmarks, frame, display=False)
+
+        if time_difference > 1:
+            #update the time counters
+            prev_time_counter = curr_time_counter
+            print(time_difference)
+    
+    
+    #create a counter that keeps track of whether a command was sent
+    pose_counter = 0
+
+    
+    #if curr_pose != 'Unknown Pose':
+        #conn.send_command("volumeUp")
     
     # Display the frame.
     cv2.imshow('Pose Classification', frame)
