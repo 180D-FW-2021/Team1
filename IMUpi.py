@@ -434,13 +434,13 @@ while True:
 ###########################LEFT/RIGHT TURNS#############################
 
     #detect left/right turns
-    if (AccYangle > 70 and just_turned_right_flag == 0):
+    if (AccYangle > 70 and just_turned_right_flag == 0 and just_flicked_up_flag == 0 and just_flicked_down_flag == 0):
         TL_detection_counter = TL_detection_counter + 1
         outputString += "LEFT TURN DETECTED!\t"
         just_turned_left_flag = 1
         if (TL_detection_counter >= 3):
             mqtt_send_flag = 1
-    if(AccYangle < -70 and just_turned_left_flag == 0):
+    if(AccYangle < -70 and just_turned_left_flag == 0 and just_flicked_up_flag == 0 and just_flicked_down_flag == 0):
         TR_detection_counter = TR_detection_counter + 1
         outputString += "RIGHT TURN DETECTED!\t"
         just_turned_right_flag = 1
@@ -532,14 +532,14 @@ while True:
 #############################FLICKING OUTPUTS###########################
 
     #reset flags/counters, output detection
-    if(difference_gyro_Z > 20 and just_flicked_right_flag == 0 and just_turned_right_flag == 0):
+    if(difference_gyro_Z > 20 and just_flicked_right_flag == 0 and just_turned_right_flag == 0 and just_flicked_up_flag == 0 and just_flicked_down_flag == 0):
         just_flicked_left_flag = 1
         counter_flicked_left = 1
         FL_detection_counter = FL_detection_counter + 1 #if there's at least 5 of this input
         outputString += "\tLEFT FLICK DETECTED!"
         if (FL_detection_counter >= 5):
             mqtt_send_flag = 1
-    if(difference_gyro_Z < -20 and just_flicked_left_flag == 0 and just_turned_left_flag == 0):
+    if(difference_gyro_Z < -20 and just_flicked_left_flag == 0 and just_turned_left_flag == 0 and just_flicked_up_flag == 0 and just_flicked_down_flag == 0):
         just_flicked_right_flag = 1
         counter_flicked_right = 1
         FR_detection_counter = FR_detection_counter + 1
@@ -547,7 +547,7 @@ while True:
         if (FR_detection_counter >= 5):
             mqtt_send_flag = 1
 
-    if(difference_gyro_X > 40 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0): #bigger numbers so that it's not as sensitive
+    if(difference_gyro_X > 40 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0 and FU_detection_counter < 8): #bigger numbers so that it's not as sensitive
         #it's possible that it detected a flick up right before this, so fix that
         just_flicked_up_flag = 0
         counter_flicked_up = 0
@@ -558,7 +558,7 @@ while True:
         outputString += "\tFLICK DOWN DETECTED"
         if (FD_detection_counter >= 8):
             mqtt_send_flag = 1
-    if(difference_gyro_X < -40 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0):
+    if(difference_gyro_X < -40 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0 and FU_detection_counter < 8):
         just_flicked_up_flag = 1
         counter_flicked_up = 1
         FU_detection_counter = FU_detection_counter + 1
