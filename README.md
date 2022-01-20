@@ -37,7 +37,7 @@ Directory: `demonstration_videos`
 ## Download & Set-Up
 Download all the files contained within our repo onto two Raspberry Pis and a computer with a webcam. 
 
-Within the gesture file, please run IMUpi_installation_script.sh. (Optional: follow the instructions in system_config_information.txt to get your Pi to run our program on boot.) Run IMUpi.py on one Raspberry Pi which is hooked up to a BerryIMU.
+Within the gesture folder, please run IMUpi_installation_script.sh. (Optional: follow the instructions in system_config_information.txt to get your Pi to run our program on boot.) Run IMUpi.py on one Raspberry Pi which is hooked up to a BerryIMU.
 
 Run mainPi.py on another Raspberry Pi which is hooked up to an IR emitter set up next to a TV's IR receiver. Requires LIRC to be installed, along with some TV remote configuation files, more details found in the lirc_configs folder README.
 
