@@ -16,7 +16,7 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-User=pi
+User=pi #modify user as needed
 ExecStart=python3 /home/pi/Desktop/180da/Team1/IMUpi.py #modify directory as needed
 WorkingDirectory=/home/pi/Desktop/180da/Team1/ #modify directory as needed
 
