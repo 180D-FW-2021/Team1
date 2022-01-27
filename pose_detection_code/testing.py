@@ -268,8 +268,7 @@ while camera_video.isOpened():
         if time_difference > 1:
             #update the time counters
             prev_time_counter = curr_time_counter
-            print(time_difference)
-    
+            print("There is a delay of : " + str(time_difference))
     
     #create a counter that keeps track of whether a command was sent
     pose_counter = 0
