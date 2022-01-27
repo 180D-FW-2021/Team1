@@ -208,8 +208,8 @@ def checkpose(landmarks, output_image, display=False):
         elif left_knee_angle > 70 and left_knee_angle < 110 and right_knee_angle < 110 and right_knee_angle > 70:
             label = 'sumo'
             color = (0,255,0)
-        print(left_knee_angle)
-        print(right_knee_angle)
+        #print(left_knee_angle)
+        #print(right_knee_angle)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
