@@ -87,16 +87,16 @@ while camera_video.isOpened():
             conn.send_command("volumeDown")
             pose_counter = 1
             curr_command = 'vol down'
-        elif curr_pose == 'sumo':
+        elif curr_pose == 'muscle mann':
             conn.send_command("channelDown")
             pose_counter = 1
             curr_command = 'chan down'
-        elif curr_pose == 'psy pose':
+        elif curr_pose == 'arms straight':
             conn.send_command("channelUp")
             pose_counter = 1
             curr_command = 'chann up'
     if time_difference >= 5:
-        if curr_pose == 'hands together' or curr_pose == 'T-pose':
+        if curr_pose == 'hands together' or curr_pose == 'relaxing':
             conn.send_command("power")
             pose_counter = 1
             curr_command = 'power'
