@@ -208,6 +208,7 @@ def checkpose(landmarks, output_image, display=False):
         elif left_knee_angle > 70 and left_knee_angle < 110 and right_knee_angle < 110 and right_knee_angle > 70:
             label = 'sumo'
             color = (0,255,0)
+            
         #print(left_knee_angle)
         #print(right_knee_angle)
 

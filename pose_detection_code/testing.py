@@ -165,48 +165,47 @@ def checkpose(landmarks, output_image, display=False):
 
     left_nose_distance = int(hypot(left_elbow_landmark[0] - nose_landmark[0], left_elbow_landmark[1] - nose_landmark[1]))
     right_nose_distance = int(hypot(right_elbow_landmark[0] - nose_landmark[0], right_elbow_landmark[1] - nose_landmark[1]))
-    wrist_distance = int(abs(left_wrist_landmark[1] - right_wrist_landmark[1]))
+    wrist_distance_nose = int(hypot(right_wrist_landmark[0] - nose_landmark[0], right_wrist_landmark[1] - nose_landmark[1]))
+    wrist_distance_y = int(abs(left_wrist_landmark[1] - right_wrist_landmark[1]))
 
     #the hands together pose
     #requires both hand landmarks to be close to each other
     hands_distance = int(hypot(left_wrist_landmark[0] - right_wrist_landmark[0], left_wrist_landmark[1] - right_wrist_landmark[1]))
 
-    #the t-pose
-    #check if both arms are straight and both shoulders are straight and both legs are straight
-    #uses the left elbow andgle and right elbow angle
-    left_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value], landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value], landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value])
-    right_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value], landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value], landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
+    #calculate required angle measurements
     left_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
                                          landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
                                          landmarks[mp_pose.PoseLandmark.LEFT_HIP.value])
     right_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value],
                                           landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
                                           landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
+
     #here we will check for what pose it could be
     #current hierarchy of poses
     #left dab -> right dab -> psy -> hands_together -> t-pose
-    if wrist_distance > 50:
-        if right_nose_distance < 100:
+    
+    if wrist_distance_y > 50:
+        if right_nose_distance < 150:
             label = 'left dab'
             color = (0,255,0)
-        elif left_nose_distance < 100:
+        elif left_nose_distance < 150:
             label = 'right dab'
             color = (0,255,0)
-    elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250):
-        label = 'psy pose'
+    elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250) and wrist_distance_nose > 230:
+        label = 'muscle man'
+        color = (0,255,0)
+    elif hands_distance < 200 and wrist_distance_nose < 110:
+        label = 'relaxing'
+        color = (0,255,0)
+    elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
+        label = 'arms straight'
         color = (0,255,0)
     elif hands_distance < 80:
         label = 'hands together'
         color = (0,255,0)
-    elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
-        if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle < 110 and right_knee_angle > 10:
-            label = 'T-pose'
-            color = (0,255,0)
-        elif left_knee_angle > 70 and left_knee_angle < 110 and right_knee_angle < 110 and right_knee_angle > 70:
-            label = 'sumo'
-            color = (0,255,0)
-        print(left_knee_angle)
-        print(right_knee_angle)
+
+    #print out specific values for debugging purposes
+    #print(wrist_distance_nose)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
@@ -268,7 +267,7 @@ while camera_video.isOpened():
         if time_difference > 1:
             #update the time counters
             prev_time_counter = curr_time_counter
-            print("There is a delay of : " + str(time_difference))
+            #print("There is a delay of : " + str(time_difference))
     
     #create a counter that keeps track of whether a command was sent
     pose_counter = 0
