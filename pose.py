@@ -3,7 +3,9 @@ import comms.comms as comms
 from pose_detection_code.together import *
 import time
 
-server = "mqtt.eclipseprojects.io"
+#server = "mqtt.eclipseprojects.io"
+server = "test.mosquitto.org"
+
 
 conn = comms.mqttCommunicator(server, {})
 
@@ -87,7 +89,7 @@ while camera_video.isOpened():
             conn.send_command("volumeDown")
             pose_counter = 1
             curr_command = 'vol down'
-        elif curr_pose == 'muscle mann':
+        elif curr_pose == 'muscle man':
             conn.send_command("channelDown")
             pose_counter = 1
             curr_command = 'chan down'
@@ -105,14 +107,8 @@ while camera_video.isOpened():
     #also prints out certain data for debugging purposes
     if pose_counter == 1: 
         prev_time_counter = curr_time_counter
-        print(str(time_difference))
-        print(curr_command)
-
-
-    #if a dab has been detected, record that time
-    #then if another dab is detected, compare that with the previous time
-    #and depending on that do stuff
-    #use a flag
+        #print(str(time_difference))
+        #print(curr_command)
 
     # Display the frame.
     cv2.imshow('Pose Classification', frame)
