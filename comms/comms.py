@@ -6,17 +6,23 @@ import time
 
 class mqttCommunicator:
 
-    topic = 'ece180d/team1'
-
-    def __init__(self, server : str, actionTable): #action table is a string -> function dictionary
+    
+    
+    def __init__(self, server : str, actionTable, mqttTopic='ece180d/team1'): #action table is a string -> function dictionary
         self.actionTable = actionTable
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
 
+        #user should ideally set their own topic and each customer should be using a different topic
+        #adding functionality to change the default topic but keeping current topic as default arg to avoid breaking other code
+        self.topic = mqttTopic 
+        
         self.client.on_message = self.on_message
-        self.client.connect_async(server)
-        self.client.loop_start()
+        self.client.connect(server)
+        #async connect unnecessary for now
+        #self.client.connect_async(server)
+        #self.client.loop_start()
 
     #debugging/logging function
     def on_connect(self, client, userdata, flags, rc):
@@ -65,8 +71,9 @@ class mqttCommunicator:
         }
         
         self.client.publish(self.topic, json.dumps(payload), qos=1)
-
-    
+        
+    def loop_forever(self):
+        self.client.loop_forever()
 
 
 #commands are sent in the form of JSON strings, which have at least an element {"command": "someCommand"}. 

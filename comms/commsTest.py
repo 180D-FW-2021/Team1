@@ -10,10 +10,8 @@ testTable = { #all actions are to be logged in a table mapping the command to be
 }
 
 
-server = 'mqtt.eclipseprojects.io'
+server = 'test.mosquitto.org'
 test1 = comms.mqttCommunicator(server, testTable)
-
-test2 = comms.mqttCommunicator(server, testTable)
 
 time.sleep(3)
 
