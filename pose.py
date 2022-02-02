@@ -4,7 +4,7 @@ from pose_detection_code.together import *
 import time
 
 #server = "mqtt.eclipseprojects.io"
-server = "test.mosquito.org"
+server = "test.mosquitto.org"
 
 
 conn = comms.mqttCommunicator(server, {})
@@ -89,7 +89,7 @@ while camera_video.isOpened():
             conn.send_command("volumeDown")
             pose_counter = 1
             curr_command = 'vol down'
-        elif curr_pose == 'muscle mann':
+        elif curr_pose == 'muscle man':
             conn.send_command("channelDown")
             pose_counter = 1
             curr_command = 'chan down'
