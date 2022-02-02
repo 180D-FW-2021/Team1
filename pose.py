@@ -3,7 +3,9 @@ import comms.comms as comms
 from pose_detection_code.together import *
 import time
 
-server = "mqtt.eclipseprojects.io"
+#server = "mqtt.eclipseprojects.io"
+server = "test.mosquito.org"
+
 
 conn = comms.mqttCommunicator(server, {})
 
