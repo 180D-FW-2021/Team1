@@ -194,7 +194,7 @@ def checkpose(landmarks, output_image, display=False):
         elif left_nose_distance < 150:
             label = 'right dab'
             color = (0,255,0)
-    elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250) and wrist_distance_nose > 230:
+    elif (left_elbow_angle < 115 and left_elbow_angle > 65) and (right_elbow_angle < 295 and right_elbow_angle > 245) and wrist_distance_nose > 230:
         label = 'muscle man'
         color = (0,255,0)
     elif hands_distance < 200 and wrist_distance_nose < 110:
