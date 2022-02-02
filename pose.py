@@ -110,12 +110,6 @@ while camera_video.isOpened():
         print(str(time_difference))
         print(curr_command)
 
-
-    #if a dab has been detected, record that time
-    #then if another dab is detected, compare that with the previous time
-    #and depending on that do stuff
-    #use a flag
-
     # Display the frame.
     cv2.imshow('Pose Classification', frame)
     
