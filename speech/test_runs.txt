@@ -1,0 +1,233 @@
+The following text is the output received from the test runs done for data
+collection on the speech module. You can see which trials where there were
+misinterpretations.
+
+POWER ON TRIALS:
+===============================
+COMMAND DETECTED - Powering on
+ power on
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power on 
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+ power off
+COMMAND DETECTED - Powering off
+ power on 
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+ power off
+COMMAND DETECTED - Powering off
+ power on 
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+ power on 
+COMMAND DETECTED - Powering on
+
+POWER OFF TRIALS:
+===============================
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+ power off
+COMMAND DETECTED - Powering off
+
+CHANNEL UP TRIALS:
+===============================
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up 
+COMMAND DETECTED - Channel up
+ Channellock
+ Channel up
+COMMAND DETECTED - Channel up
+ Channellock
+ Channel up 
+COMMAND DETECTED - Channel up
+Channellock
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up 
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+ Channel up
+COMMAND DETECTED - Channel up
+
+CHANNEL DOWN TRIALS:
+===============================
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+ Channel Down
+COMMAND DETECTED - Channel Down
+
+VOLUME UP TRIALS:
+===============================
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+ volume up
+COMMAND DETECTED - Volume up
+
+VOLUME DOWN TRIALS:
+==============================
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down
+ volume down
+COMMAND DETECTED - Volume down

@@ -1,0 +1,18 @@
+Turn left (volume down):
+34/34
+
+Turn right (volume right):
+30/31
+
+Flick left (channel down):
+31/31
+
+Flick right (channel up):
+22/26
+
+Flick up (power on):
+25/25
+
+Flick down (power off):
+26/27
+
