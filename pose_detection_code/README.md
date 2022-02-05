@@ -43,6 +43,9 @@ pose_detection trials.mkv
 dependencies.txt
   - a list of all the dependencies Isaac's virtual environment uses to run pose detection code
 
+pose_install_script.sh
+  - make sure to run this, since it contains the modules that are required to run pose detection code
+
 ## Code tags
   Where Isaac got the code from 
   - https://bleedai.com/introduction-to-pose-detection-2/
@@ -50,14 +53,11 @@ dependencies.txt
 
 ## Known Bugs
 - sometimes together.py detects the wrong pose, or may sometimes not identify a person within view
-- 
 
 ## Improvements
-- make detection code more robust so that there won't be any misidentification of a pose
-- make list of poses better such that they are aimed at disabled people (i.e not require use of legs or arms)
 - organize list of dependencies (current list is 300 above dependencies)
 
-## Decisions MAde
+## Decisions Made
 - use OpenCV, Mediapipe because others (openpose, blazepose) weren't able to be ran
 - this was the default
 - current list of poses used because they are easily identifiable and easily done by majority of people
