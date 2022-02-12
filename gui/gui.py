@@ -65,6 +65,8 @@ header = tk.Frame(root, bg='#8ecae6') #8ecae6
 content = tk.Frame(root, bg='white')
 footer = tk.Frame(root, bg='white')
 
+#Plan: have the GUI be able to cycle through each mode by pressing a button
+
 root.columnconfigure(0, weight=1) # 100% 
 
 root.rowconfigure(0, weight=1) # 20%
