@@ -54,10 +54,11 @@ pose_install_script.sh
 ## Known Bugs
 - sometimes together.py detects the wrong pose, or may sometimes not identify a person within view
 
-## Improvements
 - organize list of dependencies (current list is 300 above dependencies)
+- make a group of poses have one command specifically
 
 ## Decisions Made
 - use OpenCV, Mediapipe because others (openpose, blazepose) weren't able to be ran
 - this was the default
-- current list of poses used because they are easily identifiable and easily done by majority of people
+- current list of poses used because they are easily identifiable and easily done by majority of people, but might have to change in the future
+- 6 poses used: two for power, two for channel, two for volume

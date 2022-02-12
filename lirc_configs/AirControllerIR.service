@@ -1,0 +1,13 @@
+[Unit]
+Description=IR Pi Autostart Service for Aircontrller project, https://github.com/180D-FW-2021/Team1
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=maksym
+ExecStart=python3 <path to mainPi.py>
+WorkingDirectory=<path to directory of mainPi.py>
+[Install]
+WantedBy=multi-user.target
