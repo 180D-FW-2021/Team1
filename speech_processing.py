@@ -13,7 +13,7 @@ from six.moves import queue
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-server = "mqtt.eclipseprojects.io"
+server = "test.mosquitto.org"
 connection = comms.mqttCommunicator(server, {})
 
 class MicrophoneStream(object):
