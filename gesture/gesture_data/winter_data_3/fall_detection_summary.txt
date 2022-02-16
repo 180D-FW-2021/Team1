@@ -1,0 +1,3 @@
+26/32 falls were detected, equating to around 81% accuracy.
+
+While detecting falls is important, perhaps more important is not ignoring a user's input, thus causing the fall detection to not be perhaps as sensitive as it could be to get 95%+ accuracy. However, this enables the user to not have their inputs ignored, which is definitively more important than successfully detecting a fall to block excess inputs. Thus, while improvements may be possible, we are satisfied with where the fall detection currently is.

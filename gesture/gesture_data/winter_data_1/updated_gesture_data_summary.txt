@@ -1,0 +1,25 @@
+Turn left:
+37 trials
+37 detections
+
+Turn right:
+38 trials
+35 detections
+(mistaken as "flick right" in all other cases)
+
+Flick left:
+18 trials
+18 detections
+
+Flick right:
+32 trials
+26 detections
+(mistaken as "flick left" in all other cases)
+
+Flick down: 
+23 trials
+23 detections
+
+Flick up:
+19 trials
+19 detections

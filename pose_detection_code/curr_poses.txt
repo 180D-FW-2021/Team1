@@ -1,0 +1,27 @@
+Need to be facing the T.V / Camera for proper detection
+
+
+Arms Straight
+	arms are straight
+	roughly 180 degree angle between both arms
+	roughly 90 degree angle between main body and both arms
+
+muscle man
+	arms are 90 degree angle, raising update
+	distance between wrist and hand must exceed a certain value
+
+Relax
+	both hands on top of head
+	somewhat small distance between both wrists
+
+Dab
+	distance between nose to elbow is small
+	distance between y - hands is large
+	right dab: distance between left wrist and nose is small
+	left dab: distance between right wrist and nose is small
+
+Hands together
+	both hands together
+	wrists must be a distnace between 25 and 75
+	least required stuff done -> smallest on hierarchy
+

@@ -4,7 +4,7 @@
 #combine both types, i.e the list and the pure thing?
 #think about it later
 
-from time import time
+import time
 from math import hypot
 
 import cv2
@@ -12,13 +12,6 @@ import math
 import mediapipe as mp
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-# server = "mqtt.eclipseprojects.io"
-
-# conn = comms.mqttCommunicator(server, {})
-
-# #conn.send_command("volumeUp")
 
 # # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -31,6 +24,10 @@ mp_drawing = mp.solutions.drawing_utils
 
 # #setup pose function for video
 pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
+
+# Initialize a counter that keeps track of the time of the commands implemented
+prev_time_counter = 0
+curr_time_counter = 0
 
 def detectPose(image, pose, draw=False, display=True):
     '''
@@ -186,7 +183,7 @@ def checkpose(landmarks, output_image, display=False):
     #here we will check for what pose it could be
     #current hierarchy of poses
     #left dab -> right dab -> psy -> hands_together -> t-pose
-
+    
     if wrist_distance_y > 50:
         if right_nose_distance < 150:
             label = 'left dab'
@@ -194,7 +191,7 @@ def checkpose(landmarks, output_image, display=False):
         elif left_nose_distance < 150:
             label = 'right dab'
             color = (0,255,0)
-    elif (left_elbow_angle < 115 and left_elbow_angle > 65) and (right_elbow_angle < 295 and right_elbow_angle > 245) and wrist_distance_nose > 230:
+    elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250) and wrist_distance_nose > 230:
         label = 'muscle man'
         color = (0,255,0)
     elif hands_distance < 200 and wrist_distance_nose < 110:
@@ -206,9 +203,9 @@ def checkpose(landmarks, output_image, display=False):
     elif hands_distance < 80:
         label = 'hands together'
         color = (0,255,0)
-            
-        #print(left_knee_angle)
-        #print(right_knee_angle)
+
+    #print out specific values for debugging purposes
+    #print(wrist_distance_nose)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
@@ -225,59 +222,72 @@ def checkpose(landmarks, output_image, display=False):
         # Return the output image and the classified label.
         return output_image, label
 
-# # Initialize the VideoCapture object to read from the webcam.
-# camera_video = cv2.VideoCapture(0)
+# Initialize the VideoCapture object to read from the webcam.
+camera_video = cv2.VideoCapture(0)
 
-# # Initialize a resizable window.
-# cv2.namedWindow('All Together Pose', cv2.WINDOW_NORMAL)
+# Initialize a resizable window.
+cv2.namedWindow('All Together Pose', cv2.WINDOW_NORMAL)
  
-# # Iterate until the webcam is accessed successfully.
-# while camera_video.isOpened():
+# Iterate until the webcam is accessed successfully.
+while camera_video.isOpened():
     
-#     # Read a frame.
-#     ok, frame = camera_video.read()
+    curr_time_counter = time.monotonic()
+
+    # Read a frame.
+    ok, frame = camera_video.read()
     
-#     # Check if frame is not read properly.
-#     if not ok:
+    # Check if frame is not read properly.
+    if not ok:
         
-#         # Continue to the next iteration to read the next frame and ignore the empty camera frame.
-#         continue
+        # Continue to the next iteration to read the next frame and ignore the empty camera frame.
+        continue
     
-#     # Flip the frame horizontally for natural (selfie-view) visualization.
-#     frame = cv2.flip(frame, 1)
+    # Flip the frame horizontally for natural (selfie-view) visualization.
+    frame = cv2.flip(frame, 1)
     
-#     # Get the width and height of the frame
-#     frame_height, frame_width, _ =  frame.shape
+    # Get the width and height of the frame
+    frame_height, frame_width, _ =  frame.shape
     
-#     # Resize the frame while keeping the aspect ratio.
-#     frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
-    
-    
-#     # Perform Pose landmark detection.
-#     frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
+    # Resize the frame while keeping the aspect ratio.
+    frame = cv2.resize(frame, (int(frame_width * (640 / frame_height)), 640))
     
     
-#     # Check if the landmarks are detected.
-#     if landmarks:
+    # Perform Pose landmark detection.
+    frame, landmarks = detectPose(frame, pose_video, draw=True, display=False)
+    
+    #calculate the total time difference between the previous command when it was activated and the current time
+    time_difference = curr_time_counter - prev_time_counter
+
+    # Check if the landmarks are detected.
+    if landmarks:
         
-#         # Perform the Pose Classification.
-#         frame, curr_pose = checkpose(landmarks, frame, display=False)
+        # Perform the Pose Classification.
+        frame, curr_pose = checkpose(landmarks, frame, display=False)
+
+        if time_difference > 1:
+            #update the time counters
+            prev_time_counter = curr_time_counter
+            #print("There is a delay of : " + str(time_difference))
     
-#     if curr_pose != 'Unknown Pose':
-#         conn.send_command("volumeUp")
+    #create a counter that keeps track of whether a command was sent
+    pose_counter = 0
+
     
-#     # Display the frame.
-#     cv2.imshow('Pose Classification', frame)
+    #if curr_pose != 'Unknown Pose':
+        #conn.send_command("volumeUp")
     
-#     # Wait until a key is pressed.
-#     # Retreive the ASCII code of the key pressed
-#     k = cv2.waitKey(1) & 0xFF
+    # Display the frame.
+    cv2.imshow('Pose Classification', frame)
     
-#     # Check if 'ESC' is pressed.
-#     if(k == 27):
+    # Wait until a key is pressed.
+    # Retreive the ASCII code of the key pressed
+    k = cv2.waitKey(1) & 0xFF
+    
+    # Check if 'ESC' is pressed.
+    if(k == 27):
         
-#         # Break the loop.
-#         break
+        # Break the loop.
+        break
  
-# # Release the VideoCapture object and close the windows.
-# camera_video.release()
+# Release the VideoCapture object and close the windows.
+camera_video.release()
