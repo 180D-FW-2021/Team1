@@ -25,7 +25,7 @@ import datetime
 import os
 import comms.comms as comms
 
-server = "broker.hivemq.com"
+server = "test.mosquitto.org"
 
 conn = comms.mqttCommunicator(server, {})
 
