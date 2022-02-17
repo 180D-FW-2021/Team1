@@ -13,7 +13,7 @@ from six.moves import queue
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-server = "mqtt.eclipseprojects.io"
+server = "test.mosquitto.org"
 connection = comms.mqttCommunicator(server, {})
 
 class MicrophoneStream(object):
@@ -146,23 +146,40 @@ def listen_print_loop(responses):
             # volume command detection
             if re.search(r"\b(volume)\b", transcript, re.I):
                 # regular expression detects numbers 0-100
-                volume = re.search("[^\d](\d{1,2}|100)%?$", transcript, re.I)
+                volume = re.search("[\s](\d{1,2}|100)%?$", transcript, re.I)
                 # detect word form numbers zero-ten
                 single_digit_volume = re.search(r"\b(zero|one|two|three|four|five|six|seven|eight|nine|ten)\b", transcript, re.I)
                 # increase or decrease volume by 1
-                step_volume = re.search(r"\b(up|down)\b", transcript, re.I)
-                if volume:
-                    print("COMMAND DETECTED - Setting volume to" + volume.group(0))  
-                elif single_digit_volume:
-                    print("COMMAND DETECTED - Setting volume to " + single_num_digit_map[single_digit_volume.group(0).lower()])
+                step_volume = re.search(r"\b(up|down|increase|decrease)\b", transcript, re.I)
+                direction = step_volume.group(0)
+                if volume and step_volume:
+                    if direction == "up" or direction == "increase":
+                        print("COMMAND DETECTED - Turning volume up by" + volume.group(0))
+                        for _ in range(int(volume.group(0))):
+                            connection.send_command("volumeUp")
+                    else:
+                        print("COMMAND DETECTED - Turning volume down by" + volume.group(0))
+                        for _ in range(int(volume.group(0))):
+                            connection.send_command("volumeDown")
+                        
+                elif single_digit_volume and step_volume:
+                    volume_amount = single_num_digit_map[single_digit_volume.group(0).lower()]
+                    if direction == "up" or direction == "increase":
+                        print("COMMAND DETECTED - Turning volume up by" + volume_amount)
+                        for _ in range(int(volume_amount)):
+                            connection.send_command("volumeUp")
+                    else:
+                        print("COMMAND DETECTED - Turning volume down by" + volume_amount)
+                        for _ in range(int(volume_amount)):
+                            connection.send_command("volumeDown")
 
                 elif step_volume:
-                    step = step_volume.group(0)
-                    if step == "up":
+                    if direction == "up" or direction == "increase":
+                        print("COMMAND DETECTED - Volume up")
                         connection.send_command("volumeUp")
                     else:
+                        print("COMMAND DETECTED - Volume down")
                         connection.send_command("volumeDown")
-                    print("COMMAND DETECTED - Volume " + step)
 
                 else:
                     print("COMMAND ERROR - No valid change detected")
@@ -170,15 +187,22 @@ def listen_print_loop(responses):
             # channel command detection
             elif re.search(r"\b(channel)\b", transcript, re.I):
                 # regular expression detects any three-digit number
-                channel = re.search("([^\d]\d{1,3})%?$", transcript, re.I)
+                channel = re.search("([\s]\d{1,3})%?$", transcript, re.I)
                 # detect word form numbers zero-ten
                 single_digit_channel = re.search(r"\b(zero|one|two|three|four|five|six|seven|eight|nine|ten)\b", transcript, re.I)
                 # increase or decrease channel by 1
                 step_channel = re.search(r"\b(up|down)\b", transcript, re.I)
                 if channel:
-                    print("COMMAND DETECTED - Setting channel to" + channel.group(0))
+                    channel_number = channel.group(0)
+                    print("COMMAND DETECTED - Setting channel to" + channel_number)
+                    for digit in list(channel_number):
+                        connection.send_command(digit)
+
                 elif single_digit_channel:
-                    print("COMMAND DETECTED - Setting channel to " + single_num_digit_map[single_digit_channel.group(0).lower()])
+                    channel_number = single_num_digit_map[single_digit_channel.group(0).lower()]
+                    print("COMMAND DETECTED - Setting channel to " + channel_number)
+                    for digit in list(channel_number):
+                        connection.send_command(digit)
 
                 elif step_channel:
                     step = step_channel.group(0)
