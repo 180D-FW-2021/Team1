@@ -58,6 +58,18 @@ def stop_controller():
     subprocess.call("./kill.sh")
     os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
 
+def launch_pose_only():
+    sys.stdout.flush()
+    subprocess.call("./pose_detect.sh")
+
+def launch_voice_only():
+    sys.stdout.flush()
+    subprocess.call("./voice_detect.sh")
+
+def launch_gesture_only():
+    sys.stdout.flush()
+    subprocess.call("./gesture_detect.sh")
+
 root = tk.Tk()
 root.geometry('1200x800')
 
@@ -124,6 +136,21 @@ start_controller = tk.Button(root, text="Start Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=launch_cv).place(x=417,
                 rely=0.70, anchor='e')
+
+start_pose_controller = tk.Button(root, text = "Start Pose Detection",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=launch_pose_only).place(x=417,
+                rely=0.80, anchor='e')
+
+start_voice_controller = tk.Button(root, text = "Start Voice Detection",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=launch_voice_only).place(x=417,
+                rely=0.85, anchor='e')
+
+start_gesture_controller = tk.Button(root, text = "Start Gesture Detection",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=launch_gesture_only).place(x=417,
+                rely=0.90, anchor='e')
 
 stop_controller = tk.Button(root, text="Stop Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
