@@ -70,6 +70,9 @@ def launch_gesture_only():
     sys.stdout.flush()
     subprocess.call("./gesture_detect.sh")
 
+def openInstruction():
+    f = open("kekw.txt")
+
 root = tk.Tk()
 root.geometry('1200x800')
 
@@ -77,7 +80,7 @@ header = tk.Frame(root, bg='#8ecae6') #8ecae6
 content = tk.Frame(root, bg='white')
 footer = tk.Frame(root, bg='white')
 
-#Plan: have the GUI be able to cycle through each mode by pressing a button
+# Plan: have the GUI be able to cycle through each mode by pressing a button
 
 root.columnconfigure(0, weight=1) # 100% 
 
@@ -91,7 +94,7 @@ footer.grid(row=2, sticky='news')
 
 text = tk.Label(root, text="AirController", bg='#8ecae6', font=("Helvetica", 22)).place(relx=0.5,rely=0.05,anchor='center')
 
-demo_videos = tk.Label(root, text="Tutorial Videos", font=("Helvetica",
+demo_videos = tk.Label(root, text="Tutorial Videos (For Gesture Detection)", font=("Helvetica",
     18)).place(relx=0.5, rely=0.15,anchor='center')
 
 video_player = VideoPlayer()
@@ -99,38 +102,51 @@ video_player = VideoPlayer()
 channel_up = tk.Button(root, text="Channel Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("channel-up")).place(x=30,
-                rely=0.25, anchor='w')
+        play_video("channel-up")).place(x=30, rely=0.25, anchor='w')
 
 channel_down = tk.Button(root, text="Channel Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("channel-down")).place(x=30, rely=0.40, anchor='w')
+        play_video("channel-down")).place(x=30, rely=0.30, anchor='w')
 
 power_on = tk.Button(root, text="Power On",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
         play_video("turn-on")).place(x=717, rely=0.25, anchor='e')
 
-
 power_off = tk.Button(root, text="Power Off",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("turn-off")).place(x=717, rely=0.40, anchor='e')
+        play_video("turn-off")).place(x=717, rely=0.30, anchor='e')
 
 volume_up = tk.Button(root, text="Volume Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("vol-up")).place(x=900,
-                rely=0.25, anchor='w')
+        play_video("vol-up")).place(x=900, rely=0.25, anchor='w')
 
 volume_down = tk.Button(root, text="Volume Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("vol-down")).place(x=900, rely=0.40, anchor='w')
+        play_video("vol-down")).place(x=900, rely=0.30, anchor='w')
 
-controller = tk.Label(root, text="Controller", font=("Helvetica",
-    18)).place(relx=0.5, rely=0.55,anchor='center')
+pose_demonstration = tk.Label(root, text="Pose", font=("Helvetica",
+    18)).place(relx=0.3, rely=0.35,anchor='center')
+
+#add stuff here for pose demonstrations
+#PLAN: make a pdf of pictures of me doing a pose, then use that to show how to do a certain pose
+
+instruction_open = tk.Button(root, text="Pose Instructions",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=openInstruction).place(relx=0.3, rely=0.5, anchor='center')
+
+speech_demonstration = tk.Label(root, text="Speech", font=("Helvetica",
+    18)).place(relx=0.7, rely=0.35,anchor='center')
+
+#add stuff here for speech demonstrations
+#PLAN: idk ask steven
+
+controller = tk.Label(root, text="Actual AirController", font=("Helvetica",
+    18)).place(relx=0.5, rely=0.65,anchor='center')
 
 start_controller = tk.Button(root, text="Start Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
