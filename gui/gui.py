@@ -71,18 +71,87 @@ def launch_gesture_only():
     sys.stdout.flush()
     subprocess.call("./gesture_detect.sh")
 
+def show_muscle_man():
+    window = tk.Toplevel()
+    window.title("Muscle Man")
+    window.geometry("1000x800")
+    path = "pose_images/Muscle-Man.jpg"
+    temp = Image.open(path)
+    temp = temp.resize((1000, 800))
+    img = ImageTk.PhotoImage(temp)
+    panel = tk.Label(window, image = img)
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+
+def show_t_pose():
+    window = tk.Toplevel()
+    window.title("T-pose")
+    window.geometry("1000x800")
+    path = "pose_images/T-pose.jpg"
+    temp = Image.open(path)
+    temp = temp.resize((1000, 800))
+    img = ImageTk.PhotoImage(temp)
+    panel = tk.Label(window, image = img)
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+
+def show_relaxing():
+    window = tk.Toplevel()
+    window.title("Relaxing")
+    window.geometry("1000x800")
+    path = "pose_images/Relaxing.jpg"
+    temp = Image.open(path)
+    temp = temp.resize((1000, 800))
+    img = ImageTk.PhotoImage(temp)
+    panel = tk.Label(window, image = img)
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+
+def show_right_dab():
+    window = tk.Toplevel()
+    window.title("Right Dab")
+    window.geometry("1000x800")
+    path = "pose_images/Right-Dab.jpg"
+    temp = Image.open(path)
+    temp = temp.resize((1000, 800))
+    img = ImageTk.PhotoImage(temp)
+    panel = tk.Label(window, image = img)
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+
+def show_left_dab():
+    window = tk.Toplevel()
+    window.title("Left Dab")
+    window.geometry("1000x800")
+    path = "pose_images/Left-Dab.jpg"
+    temp = Image.open(path)
+    temp = temp.resize((1000, 800))
+    img = ImageTk.PhotoImage(temp)
+    panel = tk.Label(window, image = img)
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+
+def show_hands_together():
+    window = tk.Toplevel()
+    window.title("Hands Together")
+    window.geometry("1000x800")
+    path = "pose_images/Hands-Together.jpg"
+    temp = Image.open(path)
+    temp = temp.resize((1000, 800))
+    img = ImageTk.PhotoImage(temp)
+    panel = tk.Label(window, image = img)
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    window.mainloop()
+
 def show_owo():
     window = tk.Toplevel()
     window.title("OWO")
     window.geometry("300x300")
-    path = "Owo.jpg"
+    path = "pose_images/Owo.jpg"
     img = ImageTk.PhotoImage(Image.open(path))
     panel = tk.Label(window, image = img)
-
     panel.pack(side = "bottom", fill = "both", expand = "yes")
-
     window.mainloop()
-
 
 root = tk.Tk()
 root.geometry('1200x800')
@@ -146,9 +215,30 @@ pose_demonstration = tk.Label(root, text="Pose", font=("Helvetica",
 #add stuff here for pose demonstrations
 #PLAN: make a pdf of pictures of me doing a pose, then use that to show how to do a certain pose
 
-instruction_open = tk.Button(root, text="OWO",
+muscle_button = tk.Button(root, text="Muscle Man",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_owo).place(relx=0.3, rely=0.5, anchor='center')
+        width=25, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.3, rely=0.55, anchor='w')
+
+t_button = tk.Button(root, text="T-pose",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=show_t_pose).place(relx=0.3, rely=0.475, anchor='w')
+
+left_dab_button = tk.Button(root, text="Left Dab",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=show_left_dab).place(relx=0.3, rely=0.4, anchor='w')
+
+right_dab_button = tk.Button(root, text="Right Dab",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=show_right_dab).place(relx=0.3, rely=0.4, anchor='e')
+
+hands_button = tk.Button(root, text="Hands Together",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=show_hands_together).place(relx=0.3, rely=0.475, anchor='e')
+
+relax_button = tk.Button(root, text="Relaxing",
+        activebackground='#517687', activeforeground='black', bg='#8ecae6',
+        width=25, font=("Helvetica", 14), command=show_relaxing).place(relx=0.3, rely=0.55, anchor='e')
+
 
 speech_demonstration = tk.Label(root, text="Speech", font=("Helvetica",
     18)).place(relx=0.7, rely=0.35,anchor='center')
