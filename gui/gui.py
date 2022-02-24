@@ -7,6 +7,7 @@ import sys, os
 import subprocess
 from PIL import Image, ImageTk
 from playsound import playsound
+from tkinter import Toplevel, filedialog as fd
 
 class VideoPlayer(object):
     def __init__(self):
@@ -70,8 +71,18 @@ def launch_gesture_only():
     sys.stdout.flush()
     subprocess.call("./gesture_detect.sh")
 
-def openInstruction():
-    f = open("kekw.txt")
+def show_owo():
+    window = tk.Toplevel()
+    window.title("OWO")
+    window.geometry("300x300")
+    path = "Owo.jpg"
+    img = ImageTk.PhotoImage(Image.open(path))
+    panel = tk.Label(window, image = img)
+
+    panel.pack(side = "bottom", fill = "both", expand = "yes")
+
+    window.mainloop()
+
 
 root = tk.Tk()
 root.geometry('1200x800')
@@ -135,9 +146,9 @@ pose_demonstration = tk.Label(root, text="Pose", font=("Helvetica",
 #add stuff here for pose demonstrations
 #PLAN: make a pdf of pictures of me doing a pose, then use that to show how to do a certain pose
 
-instruction_open = tk.Button(root, text="Pose Instructions",
+instruction_open = tk.Button(root, text="OWO",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=openInstruction).place(relx=0.3, rely=0.5, anchor='center')
+        width=25, font=("Helvetica", 14), command=show_owo).place(relx=0.3, rely=0.5, anchor='center')
 
 speech_demonstration = tk.Label(root, text="Speech", font=("Helvetica",
     18)).place(relx=0.7, rely=0.35,anchor='center')
