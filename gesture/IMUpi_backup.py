@@ -25,7 +25,7 @@ import datetime
 import os
 import comms.comms as comms
 
-server = "test.mosquitto.org"
+server = "broker.hivemq.com"
 
 conn = comms.mqttCommunicator(server, {})
 
@@ -78,9 +78,7 @@ Dont use the above values, these are just an example.
 ############### END Calibration offsets #################
 
 counter_gyro = 0
-counter_gyro_y = 0
 first_ten_flag = 0
-first_three_flag = 0
 
 just_flicked_left_flag = 0
 just_flicked_right_flag = 0
@@ -88,8 +86,6 @@ just_flicked_up_flag = 0
 just_flicked_down_flag = 0
 just_turned_left_flag = 0
 just_turned_right_flag = 0
-dropped_flag = 0
-pause_flag = 0
 
 counter_flicked_left = 0
 counter_flicked_right = 0
@@ -97,8 +93,6 @@ counter_flicked_up = 0
 counter_flicked_down = 0
 counter_turned_left = 0
 counter_turned_right = 0
-counter_dropped = 0
-counter_pause = 0
 
 FL_detection_counter = 0
 FR_detection_counter = 0
@@ -507,41 +501,25 @@ while True:
     if(first_ten_flag == 0):
         counter_array_gyro_z = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         counter_array_gyro_x = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #counter_array_gyro_y = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    if(first_three_flag == 0):
-        counter_array_gyro_y = [0, 0, 0]
 
     counter_array_gyro_x[counter_gyro] = gyroXangle
     counter_array_gyro_z[counter_gyro] = gyroZangle
-    counter_array_gyro_y[counter_gyro_y] = gyroYangle
     counter_gyro = counter_gyro + 1
-    counter_gyro_y = counter_gyro_y + 1
     #print(counter_array_fp)
     #print(counter)
-
-#    if(first_three_flag == 0):
- #       counter_array_gyro_y = [0, 0, 0]
-
 
     if(counter_gyro == 10):
         counter_gyro = 0
         first_ten_flag = 1
 
-    if(counter_gyro_y == 3):
-        counter_gyro_y = 0
-        first_three_flag = 1
-
 
     difference_gyro_Z = 0
     difference_gyro_X = 0
-    difference_gyro_Y = 0
     if(first_ten_flag == 1):
         #print(counter_array_fp)
         #print(gyroZangle)
         difference_gyro_Z = gyroZangle - counter_array_gyro_z[counter_gyro]
         difference_gyro_X = gyroXangle - counter_array_gyro_x[counter_gyro]
-        #difference_gyro_Y = gyroYangle - counter_array_gyro_y[counter_gyro-5]
         #counter_array_fp[counter] = gyroZangle
         #print(difference_gyro_Z)
     #    if(difference_gyro_Z > 5):
@@ -549,9 +527,6 @@ while True:
 
 #    if(CFangleX < -45):
 #        outputString += "\tUPWARD LIFT DETECTED!"
-
-    if(first_three_flag == 1):
-        difference_gyro_Y = gyroYangle - counter_array_gyro_y[counter_gyro_y]
 
 
 #############################FLICKING OUTPUTS###########################
@@ -571,26 +546,6 @@ while True:
         outputString += "\tRIGHT FLICK DETECTED!"
         if (FR_detection_counter >= 5):
             mqtt_send_flag = 1
-
-    if(difference_gyro_X > 40 or difference_gyro_X < -40):
-        outputString += "\tDETECTED FALL"
-        dropped_flag = 1
-
-    if(dropped_flag):
-        counter_dropped = counter_dropped + 1
-        if((difference_gyro_Z > 20 or difference_gyro_Z < -20) and (difference_gyro_Y > 20 or difference_gyro_Y < -20)):
-            outputString += "\tDROPPED?"
-            pause_flag = 1
-        if(counter_dropped >= 10):
-            counter_dropped = 0
-            dropped_flag = 0
-
-    if(pause_flag):
-        outputString += "\tPAUSED"
-        counter_pause = counter_pause + 1
-        if(counter_pause >= 20):
-            counter_pause = 0
-            pause_flag = 0
 
     if(difference_gyro_X > 40 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0 and FU_detection_counter < 8): #bigger numbers so that it's not as sensitive
         #it's possible that it detected a flick up right before this, so fix that
@@ -614,15 +569,11 @@ while True:
 
 ###########################MQTT HANDLING##############################
 
-    if(pause_flag):
-        mqtt_send_flag = 0
-        mqtt_counter = 0
-
     if (mqtt_send_flag == 1):
         outputString += "\tMQTT SEND FLAG ON!"
         if (mqtt_counter == 0): #first time
             #send mqtt thing
-            if 0:
+            if 1:
                 outputString += "\tSEND MQTT"
             if 0:
                 outputString += "\nTL_detection_counter: %5.2f" % TL_detection_counter
@@ -665,7 +616,7 @@ while True:
 ###########################DEBUGGING INFORMATION######################
 
     if 0:                       #Change to '0' to stop showing the angles from the accelerometer
-        outputString += "\n# ACCX Angle %5.2f ACCY Angle %5.2f  #  " % (AccXangle, AccYangle)
+        outputString += "\t# ACCX Angle %5.2f ACCY Angle %5.2f  #  " % (AccXangle, AccYangle)
 
     if 0:
         outputString += "%5.2f" % (AccXangle)

@@ -27,11 +27,13 @@ left_right.py
   
 poses.txt
   - current list of poses and how to achieve them
+  - some of them are currently unused
   
 together.py
   - posture detection code that detects a right or left dab, arms at 90 degrees, hands placed together, a T-pose, and both arms straight and legs at 90 degrees
   - sends it to poses.py in the main folder so that the command corresponding to the pose is executed
   - CURRENT: does not generate a webcam that lets the user see what pose is being identified/the webcam view
+  - requires one available webcam on the computer
 
 Pose Detect.mp4
   - posture detection code in action, showing that dabs change the volume, and a hands-together and T-pose "presses" the power button
@@ -44,7 +46,13 @@ dependencies.txt
   - a list of all the dependencies Isaac's virtual environment uses to run pose detection code
 
 pose_install_script.sh
-  - make sure to run this, since it contains the modules that are required to run pose detection code
+  - make sure to run this, since it contains the modules that are required to run both pose detection and speech detection code
+
+testing.py
+  - testing code that won't interfere with the main approved detection
+
+required installs.txt
+  - a list of the required installs (besides those already in Anaconda) needed to run only pose detection code
 
 ## Code tags
   Where Isaac got the code from 
@@ -54,8 +62,8 @@ pose_install_script.sh
 ## Known Bugs
 - sometimes together.py detects the wrong pose, or may sometimes not identify a person within view
 
+## Improvements
 - organize list of dependencies (current list is 300 above dependencies)
-- make a group of poses have one command specifically
 
 ## Decisions Made
 - use OpenCV, Mediapipe because others (openpose, blazepose) weren't able to be ran
