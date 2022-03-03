@@ -180,6 +180,23 @@ def checkpose(landmarks, output_image, display=False):
                                           landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
                                           landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
 
+    #calculate if the hands are above or below the head
+    #this will be used in determining 
+    head_left_hand_position = (left_wrist_landmark[1]-nose_landmark[1])
+    head_right_hand_position = (right_wrist_landmark[1]-nose_landmark[1])
+    hand_position = -1
+
+    #if both hands are above the nose
+    if head_left_hand_position <= 0  and head_right_hand_position <= 0:
+        hand_position = 0
+    #else if the hands are below the nose
+    elif head_left_hand_position > 0  and head_right_hand_position > 0:
+        hand_position = 1
+    else:
+        hand_position = -2
+        
+    print(hand_position)
+
     #here we will check for what pose it could be
     #current hierarchy of poses
     #left dab -> right dab -> psy -> hands_together -> t-pose
@@ -194,15 +211,17 @@ def checkpose(landmarks, output_image, display=False):
     elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250) and wrist_distance_nose > 230:
         label = 'muscle man'
         color = (0,255,0)
-    elif hands_distance < 200 and wrist_distance_nose < 110:
-        label = 'relaxing'
-        color = (0,255,0)
+    elif hands_distance < 200 and wrist_distance_nose < 150:
+        if hand_position == 0:
+            label = 'relaxing'
+            color = (0,255,0)
     elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
         label = 'arms straight'
         color = (0,255,0)
     elif hands_distance < 80:
-        label = 'hands together'
-        color = (0,255,0)
+        if hand_position == 1:
+            label = 'hands together'
+            color = (0,255,0)
 
     #print out specific values for debugging purposes
     #print(wrist_distance_nose)
