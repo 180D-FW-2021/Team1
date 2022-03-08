@@ -173,7 +173,11 @@ header.grid(row=0, sticky='news')
 content.grid(row=1, sticky='news')
 footer.grid(row=2, sticky='news')
 
+#Start the GUI creating process
+
 text = tk.Label(root, text="AirController", bg='#8ecae6', font=("Helvetica", 22)).place(relx=0.5,rely=0.05,anchor='center')
+
+#Hand Gesture Detection
 
 demo_videos = tk.Label(root, text="Tutorial Videos (For Gesture Detection)", font=("Helvetica",
     18)).place(relx=0.5, rely=0.15,anchor='center')
@@ -210,42 +214,36 @@ volume_down = tk.Button(root, text="Volume Down",
         width=25, font=("Helvetica", 14), command=lambda:
         play_video("vol-down")).place(x=900, rely=0.30, anchor='w')
 
-pose_demonstration = tk.Label(root, text="Pose", font=("Helvetica",
-    18)).place(relx=0.3, rely=0.35,anchor='center')
+#Pose detection buttons
 
-#add stuff here for pose demonstrations
-#PLAN: make a pdf of pictures of me doing a pose, then use that to show how to do a certain pose
+pose_demonstration = tk.Label(root, text="Pose Tutorial Pictures", font=("Helvetica",
+    18)).place(relx=0.5, rely=0.35,anchor='center')
 
-muscle_button = tk.Button(root, text="Muscle Man",
+muscle_button = tk.Button(root, text="Channel Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.3, rely=0.55, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.5, rely=0.475, anchor='e')
 
-t_button = tk.Button(root, text="T-pose",
+t_button = tk.Button(root, text="Channel Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_t_pose).place(relx=0.3, rely=0.475, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_t_pose).place(relx=0.5, rely=0.475, anchor='w')
 
-left_dab_button = tk.Button(root, text="Left Dab",
+left_dab_button = tk.Button(root, text="Volume Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_left_dab).place(relx=0.3, rely=0.4, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_left_dab).place(relx=0.5, rely=0.4, anchor='w')
 
-right_dab_button = tk.Button(root, text="Right Dab",
+right_dab_button = tk.Button(root, text="Volume Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_right_dab).place(relx=0.3, rely=0.4, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_right_dab).place(relx=0.5, rely=0.4, anchor='e')
 
-hands_button = tk.Button(root, text="Hands Together",
+hands_button = tk.Button(root, text="Power",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_hands_together).place(relx=0.3, rely=0.475, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_hands_together).place(relx=0.5, rely=0.55, anchor='w')
 
-relax_button = tk.Button(root, text="Relaxing",
+relax_button = tk.Button(root, text="Power",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=show_relaxing).place(relx=0.3, rely=0.55, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_relaxing).place(relx=0.5, rely=0.55, anchor='e')
 
-
-speech_demonstration = tk.Label(root, text="Speech", font=("Helvetica",
-    18)).place(relx=0.7, rely=0.35,anchor='center')
-
-#add stuff here for speech demonstrations
-#PLAN: idk ask steven
+#Controller Buttons
 
 controller = tk.Label(root, text="Actual AirController", font=("Helvetica",
     18)).place(relx=0.5, rely=0.65,anchor='center')
