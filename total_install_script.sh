@@ -1,4 +1,3 @@
-
 #!/bin/sh
 apt-get update
 yes | pip install opencv-python
