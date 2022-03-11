@@ -1,5 +1,5 @@
 Need to be facing the T.V / Camera for proper detection
-
+I.E there must be a person that is recognized by the camera
 
 Arms Straight
 	arms are straight
@@ -24,4 +24,5 @@ Hands together
 	both hands together
 	wrists must be a distnace between 25 and 75
 	least required stuff done -> smallest on hierarchy
+	hands must be below the head
 

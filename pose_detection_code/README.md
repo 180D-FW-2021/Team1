@@ -60,7 +60,6 @@ required installs.txt
   - https://bleedai.com/introduction-to-pose-detection-and-basic-pose-classification/
 
 ## Known Bugs
-- sometimes together.py detects the wrong pose, or may sometimes not identify a person within view
 
 ## Improvements
 - organize list of dependencies (current list is 300 above dependencies)
