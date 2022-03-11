@@ -272,20 +272,5 @@ stop_controller = tk.Button(root, text="Stop Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=stop_controller).place(x=717,
                 rely=0.70, anchor='w')
-
-stop_pose_controller = tk.Button(root, text = "Stop Pose Detection",
-        activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=stop_controller).place(x=717,
-                rely=0.80, anchor='w')
-
-stop_voice_controller = tk.Button(root, text = "Stop Voice Detection",
-        activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=stop_controller).place(x=717,
-                rely=0.85, anchor='w')
-
-stop_gesture_controller = tk.Button(root, text = "Stop Gesture Detection",
-        activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=stop_controller).place(x=717,
-                rely=0.90, anchor='w')
     
 root.mainloop()
