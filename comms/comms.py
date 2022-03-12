@@ -23,7 +23,7 @@ class mqttCommunicator:
         self.client.connect(server)
         #async connect unnecessary for now
         #self.client.connect_async(server)
-        #self.client.loop_start()
+        self.client.loop_start()
 
     #debugging/logging function
     def on_connect(self, client, userdata, flags, rc):
