@@ -43,6 +43,6 @@ actionTable = {
     "9": lambda : command("KEY_9"),
 }
 
-reciever = comms.mqttCommunicator(config.mqttServer, actionTable, config.mqttTopic)
+reciever = comms.mqttCommunicator(config.mqttServer, actionTable, config.mqttTopic, subscribe=True)
 
 reciever.loop_forever()
