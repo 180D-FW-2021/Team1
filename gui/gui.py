@@ -180,97 +180,97 @@ text = tk.Label(root, text="AirController", bg='#8ecae6', font=("Helvetica", 22)
 #Hand Gesture Detection
 
 demo_videos = tk.Label(root, text="Tutorial Videos (For Gesture Detection)", font=("Helvetica",
-    18)).place(relx=0.5, rely=0.15,anchor='center')
+    18)).place(relx=0.5, rely=0.125,anchor='center')
 
 video_player = VideoPlayer()
 
 channel_up = tk.Button(root, text="Channel Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("channel-up")).place(x=30, rely=0.25, anchor='w')
+        play_video("channel-up")).place(relx=0.1, rely=0.2, anchor='w')
 
 channel_down = tk.Button(root, text="Channel Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("channel-down")).place(x=30, rely=0.30, anchor='w')
+        play_video("channel-down")).place(relx=0.1, rely=0.25, anchor='w')
 
 power_on = tk.Button(root, text="Power On",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("turn-on")).place(x=717, rely=0.25, anchor='e')
+        play_video("turn-on")).place(relx=0.4, rely=0.2, anchor='w')
 
 power_off = tk.Button(root, text="Power Off",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("turn-off")).place(x=717, rely=0.30, anchor='e')
+        play_video("turn-off")).place(relx=0.4, rely=0.25, anchor='w')
 
 volume_up = tk.Button(root, text="Volume Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("vol-up")).place(x=900, rely=0.25, anchor='w')
+        play_video("vol-up")).place(relx=0.7, rely=0.25, anchor='w')
 
 volume_down = tk.Button(root, text="Volume Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
         width=25, font=("Helvetica", 14), command=lambda:
-        play_video("vol-down")).place(x=900, rely=0.30, anchor='w')
+        play_video("vol-down")).place(relx=0.7, rely=0.2, anchor='w')
 
 #Pose detection buttons
 
 pose_demonstration = tk.Label(root, text="Pose Tutorial Pictures", font=("Helvetica",
-    18)).place(relx=0.5, rely=0.35,anchor='center')
+    18)).place(relx=0.5, rely=0.325,anchor='center')
 
 t_button = tk.Button(root, text="Channel Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_t_pose).place(relx=0.5, rely=0.475, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_t_pose).place(relx=0.7, rely=0.475, anchor='e')
 
 muscle_button = tk.Button(root, text="Channel Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.5, rely=0.475, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.3, rely=0.475, anchor='w')
 
 left_dab_button = tk.Button(root, text="Volume Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_left_dab).place(relx=0.5, rely=0.4, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_left_dab).place(relx=0.3, rely=0.4, anchor='w')
 
 right_dab_button = tk.Button(root, text="Volume Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_right_dab).place(relx=0.5, rely=0.4, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_right_dab).place(relx=0.7, rely=0.4, anchor='e')
 
 hands_button = tk.Button(root, text="Power",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_hands_together).place(relx=0.5, rely=0.55, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_hands_together).place(relx=0.3, rely=0.55, anchor='w')
 
 relax_button = tk.Button(root, text="Power",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_relaxing).place(relx=0.5, rely=0.55, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_relaxing).place(relx=0.7, rely=0.55, anchor='e')
 
 #Controller Buttons
 
 controller = tk.Label(root, text="Actual AirController", font=("Helvetica",
-    18)).place(relx=0.5, rely=0.65,anchor='center')
+    18)).place(relx=0.5, rely=0.625,anchor='center')
 
 start_controller = tk.Button(root, text="Start Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=launch_cv).place(x=417,
-                rely=0.70, anchor='e')
+        width=25, font=("Helvetica", 14), command=launch_cv).place(relx=0.15,
+                rely=0.70, anchor='w')
 
 start_pose_controller = tk.Button(root, text = "Start Pose Detection",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=launch_pose_only).place(x=417,
-                rely=0.80, anchor='e')
+        width=25, font=("Helvetica", 14), command=launch_pose_only).place(relx=0.15,
+                rely=0.80, anchor='w')
 
 start_voice_controller = tk.Button(root, text = "Start Voice Detection",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=launch_voice_only).place(x=417,
-                rely=0.85, anchor='e')
+        width=25, font=("Helvetica", 14), command=launch_voice_only).place(relx=0.15,
+                rely=0.85, anchor='w')
 
 start_gesture_controller = tk.Button(root, text = "Start Gesture Detection",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=launch_gesture_only).place(x=417,
-                rely=0.90, anchor='e')
+        width=25, font=("Helvetica", 14), command=launch_gesture_only).place(relx=0.15,
+                rely=0.90, anchor='w')
 
 stop_controller = tk.Button(root, text="Stop Controller",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=25, font=("Helvetica", 14), command=stop_controller).place(x=717,
-                rely=0.70, anchor='w')
+        width=25, font=("Helvetica", 14), command=stop_controller).place(relx=0.85,
+                rely=0.70, anchor='e')
     
 root.mainloop()
