@@ -8,11 +8,12 @@ class mqttCommunicator:
 
     
     
-    def __init__(self, server : str, actionTable, mqttTopic='ece180d/team1'): #action table is a string -> function dictionary
+    def __init__(self, server : str, actionTable, mqttTopic='ece180d/team1', subscribe=False): #action table is a string -> function dictionary
         self.actionTable = actionTable
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
+        self.subscribe = subscribe
 
         #user should ideally set their own topic and each customer should be using a different topic
         #adding functionality to change the default topic but keeping current topic as default arg to avoid breaking other code
@@ -27,7 +28,8 @@ class mqttCommunicator:
     #debugging/logging function
     def on_connect(self, client, userdata, flags, rc):
         print("Connection returned result: "+str(rc))
-        self.client.subscribe(self.topic, qos=1)
+        if self.subscribe == True:
+            self.client.subscribe(self.topic, qos=1)
    
    
     #debugging/logging function
@@ -40,7 +42,6 @@ class mqttCommunicator:
 
     #internal on_message function
     def on_message(self, client, userdata, message):
-        #TODO: verify topic is correct
         decodedMessage = json.loads(message.payload)
         print("Received" + str(message.payload))
         if "command" in decodedMessage:
@@ -62,7 +63,7 @@ class mqttCommunicator:
     
     #generic send message function if needed, preferrably use send_command though for basic command publishing
     def send_message(self, message: str):
-        self.client.publish(self.topic, message, qos=1)
+        self.client.publish(self.topic, message, qos=0)
 
     def send_command(self, command: str):
         payload = {
@@ -70,7 +71,7 @@ class mqttCommunicator:
             "timestamp" : time.time()
         }
         
-        self.client.publish(self.topic, json.dumps(payload), qos=1)
+        self.client.publish(self.topic, json.dumps(payload), qos=0)
         
     def loop_forever(self):
         self.client.loop_forever()
