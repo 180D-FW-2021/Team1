@@ -88,11 +88,11 @@ while camera_video.isOpened():
             pose_counter = 1
             curr_command = 'vol down'
         elif curr_pose == 'muscle man':
-            conn.send_command("channelDown")
+            conn.send_command("channelUp")
             pose_counter = 1
             curr_command = 'chan down'
         elif curr_pose == 'arms straight':
-            conn.send_command("channelUp")
+            conn.send_command("channelDown")
             pose_counter = 1
             curr_command = 'chann up'
     if time_difference >= 5:

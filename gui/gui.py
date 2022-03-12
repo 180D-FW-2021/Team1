@@ -219,13 +219,13 @@ volume_down = tk.Button(root, text="Volume Down",
 pose_demonstration = tk.Label(root, text="Pose Tutorial Pictures", font=("Helvetica",
     18)).place(relx=0.5, rely=0.35,anchor='center')
 
-muscle_button = tk.Button(root, text="Channel Down",
+t_button = tk.Button(root, text="Channel Down",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.5, rely=0.475, anchor='e')
+        width=20, font=("Helvetica", 14), command=show_t_pose).place(relx=0.5, rely=0.475, anchor='e')
 
-t_button = tk.Button(root, text="Channel Up",
+muscle_button = tk.Button(root, text="Channel Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
-        width=20, font=("Helvetica", 14), command=show_t_pose).place(relx=0.5, rely=0.475, anchor='w')
+        width=20, font=("Helvetica", 14), command=show_muscle_man).place(relx=0.5, rely=0.475, anchor='w')
 
 left_dab_button = tk.Button(root, text="Volume Up",
         activebackground='#517687', activeforeground='black', bg='#8ecae6',
