@@ -219,7 +219,7 @@ def checkpose(landmarks, output_image, display=False):
     elif left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle < 195 and right_elbow_angle > 165 and left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
         label = 'arms straight'
         color = (0,255,0)
-    elif hands_distance < 80:
+    elif hands_distance < 140:
         if hand_position == 1:
             label = 'hands together'
             color = (0,255,0)

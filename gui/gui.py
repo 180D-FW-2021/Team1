@@ -9,6 +9,7 @@ import subprocess
 from PIL import Image, ImageTk
 from playsound import playsound
 from tkinter import Toplevel, filedialog as fd
+from tkinter import messagebox
 
 class VideoPlayer(object):
     def __init__(self):
@@ -70,7 +71,7 @@ def launch_voice_only():
 
 def launch_gesture_only():
     sys.stdout.flush()
-    subprocess.call("./gesture_detect.sh")
+    messagebox.showinfo('Gesture Detection','To enable gesture detection, please turn on the Raspberry Pi and BerryIMU remote controller')
 
 def show_muscle_man():
     window = tk.Toplevel()
@@ -245,7 +246,7 @@ relax_button = tk.Button(root, text="Power",
 
 #Controller Buttons
 
-controller = tk.Label(root, text="Actual AirController", font=("Helvetica",
+controller = tk.Label(root, text="AirController Controls", font=("Helvetica",
     18)).place(relx=0.5, rely=0.625,anchor='center')
 
 start_controller = tk.Button(root, text="Start Controller",
