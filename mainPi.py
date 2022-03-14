@@ -1,10 +1,13 @@
 import time
+import threading
 import comms.comms as comms #fix this, in comms put __init__.py to import comms, but rename comms.py to mqttCommunicator.py, will break other code for now so do later
 import os
 import socket
 import lirc
 import config
 
+repeatCount = 4
+lock = threading.Lock()
 
 lircClient = lirc.Client(
   connection=lirc.LircdConnection(
@@ -21,11 +24,24 @@ remote = config.defaultRemote
 def command(cstr, count=1):
     #command = "irsend SEND_ONCE " + remote + " " + cstr
     #os.system(command)
+    lock.acquire()
     if count == 1:
       lircClient.send_once(remote, cstr)
     else:
-      lircClient.send_once(remote, cstr, repeat_count = count-1 )
-    print("Recieved a " + cstr + "and count " + str(count), ", running ")
+      #rapid sends of more than 4 tend to fail, fixing by dealing
+      loopCount = count -1
+      for _ in range(loopCount//repeatCount):
+        lircClient.send_once(remote, cstr, repeat_count = repeatCount-1 )
+        time.sleep(0.3)
+      loopCount = loopCount % repeatCount
+      if loopCount > 0:
+        if loopCount == 1:
+          lircClient.send_once(remote, cstr)
+        else:
+           lircClient.send_once(remote, cstr, repeat_count = loopCount - 1)
+      #lircClient.send_once(remote, cstr, repeat_count = count-1 )
+      lock.release()
+    print("Recieved a " + cstr + " and count " + str(count), ", running...")
 
 actionTable = {
 
