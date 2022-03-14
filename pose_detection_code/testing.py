@@ -203,10 +203,10 @@ def checkpose(landmarks, output_image, display=False):
     #left dab -> right dab -> psy -> hands_together -> t-pose
     
     if wrist_distance_y > 50:
-        if right_nose_distance < 150:
+        if right_nose_distance < 200:
             label = 'left dab'
             color = (0,255,0)
-        elif left_nose_distance < 150:
+        elif left_nose_distance < 200:
             label = 'right dab'
             color = (0,255,0)
     elif (left_elbow_angle < 110 and left_elbow_angle > 70) and (right_elbow_angle < 290 and right_elbow_angle > 250) and wrist_distance_nose > 230:
@@ -226,6 +226,7 @@ def checkpose(landmarks, output_image, display=False):
 
     #print out specific values for debugging purposes
     #print(wrist_distance_nose)
+    print(left_nose_distance)
 
     #here we will check if the pose was identified or not, and output the image
     cv2.putText(output_image, label, (10, 30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
