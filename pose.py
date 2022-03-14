@@ -106,7 +106,7 @@ while camera_video.isOpened():
     if pose_counter == 1: 
         prev_time_counter = curr_time_counter
         #print(str(time_difference))
-        #print(curr_command)
+        print(curr_command)
 
     # Display the frame.
     cv2.imshow('Pose Classification', frame)
