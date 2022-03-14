@@ -71,7 +71,7 @@ def launch_voice_only():
 
 def launch_gesture_only():
     sys.stdout.flush()
-    messagebox.showinfo('Gesture Detection','To enable gesture detection, turn on the Raspberry Pi and BerryIMU remote controller please')
+    messagebox.showinfo('Gesture Detection','To enable gesture detection, please turn on the Raspberry Pi and BerryIMU remote controller')
 
 def show_muscle_man():
     window = tk.Toplevel()
