@@ -156,30 +156,19 @@ def listen_print_loop(responses):
                 if volume and step_volume:
                     if direction == "up" or direction == "increase":
                         print("COMMAND DETECTED - Turning volume up by" + volume.group(0))
-                        for _ in range(int(volume.group(0))):
-                            connection.send_command("volumeUp")
-                            time.sleep(0.5)
-
+                        connection.send_command("volumeUp", int(volume.group(0)))
                     else:
                         print("COMMAND DETECTED - Turning volume down by" + volume.group(0))
-                        print("DIRECTION: " + direction)
-                        for _ in range(int(volume.group(0))):
-                            connection.send_command("volumeDown")
-                            time.sleep(0.5)
+                        connection.send_command("volumeDown", int(volume.group(0)))
                         
                 elif single_digit_volume and step_volume:
                     volume_amount = single_num_digit_map[single_digit_volume.group(0).lower()]
                     if direction == "up" or direction == "increase":
                         print("COMMAND DETECTED - Turning volume up by" + volume_amount)
-                        for _ in range(int(volume_amount)):
-                            connection.send_command("volumeUp")
-                            time.sleep(0.5)
+                        connection.send_command("volumeUp", int(volume_amount))
                     else:
                         print("COMMAND DETECTED - Turning volume down by" + volume_amount)
-                        print("DIRECTION: " + direction)
-                        for _ in range(int(volume_amount)):
-                            connection.send_command("volumeDown")
-                            time.sleep(0.5)
+                        connection.send_command("volumeDown", int(volume_amount))
 
                 elif step_volume:
                     if direction == "up" or direction == "increase":
