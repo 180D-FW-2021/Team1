@@ -44,6 +44,9 @@ class mqttCommunicator:
     def on_message(self, client, userdata, message):
         decodedMessage = json.loads(message.payload)
         print("Received" + str(message.payload))
+        count = 1
+        if "count" in decodedMessage:
+            count = decodedMessage["count"]
         if "command" in decodedMessage:
             command = decodedMessage["command"]
         else:
@@ -52,7 +55,7 @@ class mqttCommunicator:
             return
         if command in self.actionTable:
             action = self.actionTable[command]
-            action()
+            action(count)
         else:
             print('Command Error: Received message: "' + str(message.payload) + '" on topic "' +
                 message.topic + '" with QoS ' + str(message.qos))
@@ -65,10 +68,11 @@ class mqttCommunicator:
     def send_message(self, message: str):
         self.client.publish(self.topic, message, qos=0)
 
-    def send_command(self, command: str):
+    def send_command(self, command: str, count=1):
         payload = {
             "command" : command,
-            "timestamp" : time.time()
+            "timestamp" : time.time(),
+            "count" : count
         }
         
         self.client.publish(self.topic, json.dumps(payload), qos=1)
