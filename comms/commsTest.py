@@ -13,7 +13,7 @@ testTable = { #all actions are to be logged in a table mapping the command to be
 server = 'test.mosquitto.org'
 test1 = comms.mqttCommunicator(server, testTable)
 
-time.sleep(3)
+#time.sleep(3)
 
 test1.send_command("power")
 time.sleep(12)

@@ -8,11 +8,12 @@ class mqttCommunicator:
 
     
     
-    def __init__(self, server : str, actionTable, mqttTopic='ece180d/team1'): #action table is a string -> function dictionary
+    def __init__(self, server : str, actionTable, mqttTopic='ece180d/team1', subscribe=False): #action table is a string -> function dictionary
         self.actionTable = actionTable
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
+        self.subscribe = subscribe
 
         #user should ideally set their own topic and each customer should be using a different topic
         #adding functionality to change the default topic but keeping current topic as default arg to avoid breaking other code
@@ -22,12 +23,13 @@ class mqttCommunicator:
         self.client.connect(server)
         #async connect unnecessary for now
         #self.client.connect_async(server)
-        #self.client.loop_start()
+        self.client.loop_start()
 
     #debugging/logging function
     def on_connect(self, client, userdata, flags, rc):
         print("Connection returned result: "+str(rc))
-        self.client.subscribe(self.topic, qos=1)
+        if self.subscribe == True:
+            self.client.subscribe(self.topic, qos=1)
    
    
     #debugging/logging function
@@ -40,9 +42,11 @@ class mqttCommunicator:
 
     #internal on_message function
     def on_message(self, client, userdata, message):
-        #TODO: verify topic is correct
         decodedMessage = json.loads(message.payload)
         print("Received" + str(message.payload))
+        count = 1
+        if "count" in decodedMessage:
+            count = decodedMessage["count"]
         if "command" in decodedMessage:
             command = decodedMessage["command"]
         else:
@@ -51,7 +55,7 @@ class mqttCommunicator:
             return
         if command in self.actionTable:
             action = self.actionTable[command]
-            action()
+            action(count)
         else:
             print('Command Error: Received message: "' + str(message.payload) + '" on topic "' +
                 message.topic + '" with QoS ' + str(message.qos))
@@ -62,15 +66,16 @@ class mqttCommunicator:
     
     #generic send message function if needed, preferrably use send_command though for basic command publishing
     def send_message(self, message: str):
-        self.client.publish(self.topic, message, qos=1)
+        self.client.publish(self.topic, message, qos=0)
 
-    def send_command(self, command: str):
+    def send_command(self, command: str, count=1):
         payload = {
             "command" : command,
-            "timestamp" : time.time()
+            "timestamp" : time.time(),
+            "count" : count
         }
         
-        self.client.publish(self.topic, json.dumps(payload), qos=1)
+        self.client.publish(self.topic, json.dumps(payload), qos=0)
         
     def loop_forever(self):
         self.client.loop_forever()

@@ -1,10 +1,13 @@
 import time
+import threading
 import comms.comms as comms #fix this, in comms put __init__.py to import comms, but rename comms.py to mqttCommunicator.py, will break other code for now so do later
 import os
 import socket
 import lirc
 import config
 
+repeatCount = 4
+lock = threading.Lock()
 
 lircClient = lirc.Client(
   connection=lirc.LircdConnection(
@@ -18,31 +21,47 @@ lircClient = lirc.Client(
 remote = config.defaultRemote
 #may add functionality to change remote during operation later, so keeping this
 
-def command(str):
-    #command = "irsend SEND_ONCE " + remote + " " + str
+def command(cstr, count=1):
+    #command = "irsend SEND_ONCE " + remote + " " + cstr
     #os.system(command)
-    lircClient.send_once(remote, str)
-    print("Recieved a " + str + ", running ")
+    lock.acquire()
+    if count == 1:
+      lircClient.send_once(remote, cstr)
+    else:
+      #rapid sends of more than 4 tend to fail, fixing by dealing
+      loopCount = count -1
+      for _ in range(loopCount//repeatCount):
+        lircClient.send_once(remote, cstr, repeat_count = repeatCount-1 )
+        time.sleep(0.3)
+      loopCount = loopCount % repeatCount
+      if loopCount > 0:
+        if loopCount == 1:
+          lircClient.send_once(remote, cstr)
+        else:
+           lircClient.send_once(remote, cstr, repeat_count = loopCount - 1)
+      #lircClient.send_once(remote, cstr, repeat_count = count-1 )
+      lock.release()
+    print("Recieved a " + cstr + " and count " + str(count), ", running...")
 
 actionTable = {
 
-    "volumeUp" : lambda : command("KEY_VOLUMEUP"),
-    "volumeDown" : lambda : command("KEY_VOLUMEDOWN"),
-    "power" : lambda : command("KEY_POWER"),
-    "channelUp" : lambda : command("KEY_CHANNELUP"),
-    "channelDown" : lambda : command("KEY_CHANNELDOWN"),
-    "0": lambda : command("KEY_0"),
-    "1": lambda : command("KEY_1"),
-    "2": lambda : command("KEY_2"),
-    "3": lambda : command("KEY_3"),
-    "4": lambda : command("KEY_4"),
-    "5": lambda : command("KEY_5"),
-    "6": lambda : command("KEY_6"),
-    "7": lambda : command("KEY_7"),
-    "8": lambda : command("KEY_8"),
-    "9": lambda : command("KEY_9"),
+    "volumeUp" : lambda count: command("KEY_VOLUMEUP", count),
+    "volumeDown" : lambda count: command("KEY_VOLUMEDOWN", count),
+    "power" : lambda count: command("KEY_POWER", count),
+    "channelUp" : lambda count: command("KEY_CHANNELUP", count),
+    "channelDown" : lambda count: command("KEY_CHANNELDOWN", count),
+    "0": lambda count : command("KEY_0", count),
+    "1": lambda count : command("KEY_1", count),
+    "2": lambda count : command("KEY_2", count),
+    "3": lambda count : command("KEY_3", count),
+    "4": lambda count : command("KEY_4", count),
+    "5": lambda count : command("KEY_5", count),
+    "6": lambda count : command("KEY_6", count),
+    "7": lambda count : command("KEY_7", count),
+    "8": lambda count : command("KEY_8", count),
+    "9": lambda count : command("KEY_9", count),
 }
 
-reciever = comms.mqttCommunicator(config.mqttServer, actionTable, config.mqttTopic)
+reciever = comms.mqttCommunicator(config.mqttServer, actionTable, config.mqttTopic, subscribe=True)
 
 reciever.loop_forever()
