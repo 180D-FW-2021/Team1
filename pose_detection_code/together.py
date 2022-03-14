@@ -203,10 +203,10 @@ def checkpose(landmarks, output_image, display=False):
     #left dab -> right dab -> psy -> hands_together -> t-pose
 
     if wrist_distance_y > 50:
-        if right_nose_distance < 150:
+        if right_nose_distance < 200:
             label = 'left dab'
             color = (0,255,0)
-        elif left_nose_distance < 150:
+        elif left_nose_distance < 200:
             label = 'right dab'
             color = (0,255,0)
     elif (left_elbow_angle < 115 and left_elbow_angle > 65) and (right_elbow_angle < 295 and right_elbow_angle > 245) and wrist_distance_nose > 230:
