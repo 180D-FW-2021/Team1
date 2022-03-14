@@ -18,14 +18,14 @@ lircClient = lirc.Client(
 remote = config.defaultRemote
 #may add functionality to change remote during operation later, so keeping this
 
-def command(str, count=1):
-    #command = "irsend SEND_ONCE " + remote + " " + str
+def command(cstr, count=1):
+    #command = "irsend SEND_ONCE " + remote + " " + cstr
     #os.system(command)
     if count == 1:
-      lircClient.send_once(remote, str)
+      lircClient.send_once(remote, cstr)
     else:
-      lircClient.send_once(remote, str, repeat_count = count-1 )
-    print("Recieved a " + str + "and count " + str(count), ", running ")
+      lircClient.send_once(remote, cstr, repeat_count = count-1 )
+    print("Recieved a " + cstr + "and count " + str(count), ", running ")
 
 actionTable = {
 
