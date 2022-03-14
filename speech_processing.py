@@ -152,7 +152,7 @@ def listen_print_loop(responses):
                 single_digit_volume = re.search(r"\b(zero|one|two|three|four|five|six|seven|eight|nine|ten)\b", transcript, re.I)
                 # increase or decrease volume by 1
                 step_volume = re.search(r"\b(up|down|increase|decrease)\b", transcript, re.I)
-                direction = step_volume.group(0)
+                direction = step_volume.group(0).lower()
                 if volume and step_volume:
                     if direction == "up" or direction == "increase":
                         print("COMMAND DETECTED - Turning volume up by" + volume.group(0))
@@ -162,6 +162,7 @@ def listen_print_loop(responses):
 
                     else:
                         print("COMMAND DETECTED - Turning volume down by" + volume.group(0))
+                        print("DIRECTION: " + direction)
                         for _ in range(int(volume.group(0))):
                             connection.send_command("volumeDown")
                             time.sleep(0.5)
@@ -175,6 +176,7 @@ def listen_print_loop(responses):
                             time.sleep(0.5)
                     else:
                         print("COMMAND DETECTED - Turning volume down by" + volume_amount)
+                        print("DIRECTION: " + direction)
                         for _ in range(int(volume_amount)):
                             connection.send_command("volumeDown")
                             time.sleep(0.5)

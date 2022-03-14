@@ -71,7 +71,7 @@ class mqttCommunicator:
             "timestamp" : time.time()
         }
         
-        self.client.publish(self.topic, json.dumps(payload), qos=0)
+        self.client.publish(self.topic, json.dumps(payload), qos=1)
         
     def loop_forever(self):
         self.client.loop_forever()
