@@ -25,7 +25,7 @@ def command(str, count=1):
       lircClient.send_once(remote, str)
     else:
       lircClient.send_once(remote, str, repeat_count = count-1 )
-    print("Recieved a " + str + "and count " + str(count) ", running ")
+    print("Recieved a " + str + "and count " + str(count), ", running ")
 
 actionTable = {
 
