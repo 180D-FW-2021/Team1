@@ -1,0 +1,1 @@
+This is both the CAD files and a collection of photos showing what the IMU case looks like once printed. There is a hole present for any wires to run through (primarily to recharge the battery onboard). The wire in the photos has been moved out of the way so that you can see the internals. The case was designed and printed by Maksym.

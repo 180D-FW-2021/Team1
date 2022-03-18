@@ -603,7 +603,7 @@ while True:
         outputString += "\tFLICK DOWN DETECTED"
         if (FD_detection_counter >= 8):
             mqtt_send_flag = 1
-    if(difference_gyro_X < -40 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0 and FU_detection_counter < 8):
+    if(difference_gyro_X < -25 and just_flicked_down_flag == 0 and just_flicked_left_flag == 0 and just_flicked_right_flag == 0 and FU_detection_counter < 8):
         just_flicked_up_flag = 1
         counter_flicked_up = 1
         FU_detection_counter = FU_detection_counter + 1
@@ -624,7 +624,7 @@ while True:
             #send mqtt thing
             if 0:
                 outputString += "\tSEND MQTT"
-            if 0:
+            if 0: #debugging info
                 outputString += "\nTL_detection_counter: %5.2f" % TL_detection_counter
                 outputString += "\nTR_detection_counter: %5.2f" % TR_detection_counter
                 outputString += "\nFL_detection_counter: %5.2f" % FL_detection_counter

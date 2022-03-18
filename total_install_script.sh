@@ -13,3 +13,4 @@ yes | pip install playsound
 yes | brew install portaudio --HEAD
 yes | pip install paho-mqtt
 yes | pip install imageio-ffmpeg
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/stephenchu/ECE180DA/oval-replica-340120-1d2ac5839b16.json"

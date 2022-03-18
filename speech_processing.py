@@ -2,6 +2,7 @@ from __future__ import division
 
 import re
 import sys
+import time
 import comms.comms as comms
 
 from google.cloud import speech
@@ -151,27 +152,23 @@ def listen_print_loop(responses):
                 single_digit_volume = re.search(r"\b(zero|one|two|three|four|five|six|seven|eight|nine|ten)\b", transcript, re.I)
                 # increase or decrease volume by 1
                 step_volume = re.search(r"\b(up|down|increase|decrease)\b", transcript, re.I)
-                direction = step_volume.group(0)
+                direction = step_volume.group(0).lower()
                 if volume and step_volume:
                     if direction == "up" or direction == "increase":
                         print("COMMAND DETECTED - Turning volume up by" + volume.group(0))
-                        for _ in range(int(volume.group(0))):
-                            connection.send_command("volumeUp")
+                        connection.send_command("volumeUp", int(volume.group(0)))
                     else:
                         print("COMMAND DETECTED - Turning volume down by" + volume.group(0))
-                        for _ in range(int(volume.group(0))):
-                            connection.send_command("volumeDown")
+                        connection.send_command("volumeDown", int(volume.group(0)))
                         
                 elif single_digit_volume and step_volume:
                     volume_amount = single_num_digit_map[single_digit_volume.group(0).lower()]
                     if direction == "up" or direction == "increase":
                         print("COMMAND DETECTED - Turning volume up by" + volume_amount)
-                        for _ in range(int(volume_amount)):
-                            connection.send_command("volumeUp")
+                        connection.send_command("volumeUp", int(volume_amount))
                     else:
                         print("COMMAND DETECTED - Turning volume down by" + volume_amount)
-                        for _ in range(int(volume_amount)):
-                            connection.send_command("volumeDown")
+                        connection.send_command("volumeDown", int(volume_amount))
 
                 elif step_volume:
                     if direction == "up" or direction == "increase":
@@ -197,12 +194,14 @@ def listen_print_loop(responses):
                     print("COMMAND DETECTED - Setting channel to" + channel_number)
                     for digit in list(channel_number):
                         connection.send_command(digit)
+                        time.sleep(0.5)
 
                 elif single_digit_channel:
                     channel_number = single_num_digit_map[single_digit_channel.group(0).lower()]
                     print("COMMAND DETECTED - Setting channel to " + channel_number)
                     for digit in list(channel_number):
                         connection.send_command(digit)
+                        time.sleep(0.5)
 
                 elif step_channel:
                     step = step_channel.group(0)
