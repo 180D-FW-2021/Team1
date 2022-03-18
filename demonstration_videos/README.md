@@ -1,4 +1,4 @@
-This folder contains the demonstration videos of the subcomponents of our project.
+This folder contains the demonstration videos of the subcomponents of our project. It also contains the google forms responses when Team1 and Team6 tested each other's products
 
 Here is our video demo from the midterm during winter quarter: https://youtu.be/KDHwJebPFrk
 
