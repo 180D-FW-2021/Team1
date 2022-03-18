@@ -1,6 +1,8 @@
 # AirController
 
-Being forced to get up and get the remote to just change the volume is a hassle for households that use a TV. To fix this issue, we have decided to prototype AirController, a system that can take in hand gestures as inputs and accordingly modify the volume. In this case, the user can make a specific gesture using their hand/arm in order to utilize a specific control option on the TV. This way those who are disabled or are not within reach of a remote can use their hands to access controls.
+Being forced to get up and get the remote just to change the volume or channel is a hassle for households that use a TV. To fix this issue, we have decided to prototype AirController, a system that can take in gestures, poses, and speech as inputs and accordingly control a TV based on the user input. The user can make a specific gesture using their hands or body in order to control the TV, or otherwise issue speech commands to control it that way. These alternate control methods aid those who are disabled and unable to use a normal TV remote, as well as those who are not currently within reach of a remote and do not want to go searching for it.
+
+Currently, the AirController can support 5 commands: Power, Channel Up/Down, and Volume Up/Down. These 5 commands are activated in one of three ways: striking a pose in front of the webcam, moving the hand holding a BerryIMU, or speaking a command. 
 
 ## Pose Recognition (OpenCV and MediaPipe)
 Uses computer vision and image processing to detect specific body positions and poses. Uses MQTT to communicate detected poses to the subscriber Raspberry Pi.
