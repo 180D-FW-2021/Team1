@@ -40,6 +40,9 @@ Pose Detect.mp4
 Pose Detection Trials.mkv
   - all the trials done to detect if there was any errors when detecting poses 
 
+Pose_Demonstration.mp4
+  - a demonstration of how to properly use the pose detection to control the AirController
+
 dependencies.txt
   - a list of all the dependencies Isaac's virtual environment uses to run pose detection code
 
