@@ -624,7 +624,7 @@ while True:
             #send mqtt thing
             if 0:
                 outputString += "\tSEND MQTT"
-            if 0:
+            if 0: #debugging info
                 outputString += "\nTL_detection_counter: %5.2f" % TL_detection_counter
                 outputString += "\nTR_detection_counter: %5.2f" % TR_detection_counter
                 outputString += "\nFL_detection_counter: %5.2f" % FL_detection_counter
