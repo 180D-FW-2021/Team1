@@ -5,19 +5,19 @@ Isaac Xu's responsibility
 ## Contents
 
 check_dab.py
-  - posture detection code for a dab
+  - demo code for detecting if a person is in a dab position
 
 check_psy.py
-  - posture detection code for both arms at a 90 degree angle
+  - demo code for detecting if both arms are at a 90 degree angle
  
 check_three_pose.py
-  - posture detection code for three poses: T-pose, tree pose, and Warrior II pose
+  - demo code for detecting three poses: T-pose, tree pose, and Warrior II pose
   
 gui_pose_test.py
   - demo code for combining gui and posture detection code
   
 hands_together.py
-  - posture detection code for having both hands together
+  - demo code for detecting if a person has their hands in close contact
   
 jump_stand.py
   - demo code for detecting if a person is either jumping, crouching, or standing
@@ -27,19 +27,17 @@ left_right.py
   
 poses.txt
   - current list of poses and how to achieve them
-  - some of them are currently unused
   
 together.py
   - posture detection code that detects a right or left dab, arms at 90 degrees, hands placed together, a T-pose, and both arms straight and legs at 90 degrees
   - sends it to poses.py in the main folder so that the command corresponding to the pose is executed
-  - CURRENT: does not generate a webcam that lets the user see what pose is being identified/the webcam view
   - requires one available webcam on the computer
 
 Pose Detect.mp4
   - posture detection code in action, showing that dabs change the volume, and a hands-together and T-pose "presses" the power button
   - having both arms at 90 degree angle, or having both arms straight while legs are at a 90 degree angle would change the channel up and down, but that T.V didn't have any channels to change. The signal was still sent to the mqtt.
 
-pose_detection trials.mkv
+Pose Detection Trials.mkv
   - all the trials done to detect if there was any errors when detecting poses 
 
 dependencies.txt
@@ -55,7 +53,7 @@ required installs.txt
   - a list of the required installs (besides those already in Anaconda) needed to run only pose detection code
 
 ## Code tags
-  Where Isaac got the code from 
+  Where Isaac got help for the code from
   - https://bleedai.com/introduction-to-pose-detection-2/
   - https://bleedai.com/introduction-to-pose-detection-and-basic-pose-classification/
 
@@ -65,7 +63,6 @@ required installs.txt
 - organize list of dependencies (current list is 300 above dependencies)
 
 ## Decisions Made
-- use OpenCV, Mediapipe because others (openpose, blazepose) weren't able to be ran
 - this was the default
 - current list of poses used because they are easily identifiable and easily done by majority of people, but might have to change in the future
 - 6 poses used: two for power, two for channel, two for volume
