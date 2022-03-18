@@ -47,11 +47,6 @@ Speech - currently supports keyword detection for "volume", "channel", and "powe
 
 Gesture (BerryIMU) - possible gestures include tilt right (volume up), tilt left (volume down), flick right (channel up), flick left (channel down), flick up (power on), and flick down (power off). The BerryIMU should be facing forward and parallel to the ground as its neutral position. For a visual explanation, launch gui.py and view the tutorial videos.
 
-## Requirements
-
-Make sure to download all the required modules from requirements.txt by running
-`pip install -r requirements.txt`
-
 ## Credits
 
 Developed by Steven Chu, Maksym Prokopovych, Sierra Rose, and Isaac Xu.
