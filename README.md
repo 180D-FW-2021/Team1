@@ -48,7 +48,7 @@ Gesture (BerryIMU) - possible gestures include tilt right (volume up), tilt left
 ## Requirements
 
 Make sure to download all the required modules from requirements.txt by running
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Credits
 
