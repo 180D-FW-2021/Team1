@@ -16,7 +16,3 @@ pip install pyaudio
 
 Also required to run this code is a Google Cloud private key. It has been removed from this public repository, but is available upon request.
 After obtaining the key, append `export GOOGLE_APPLICATION_CREDENTIALS="KEY_PATH"` to your ~/.bash_profile file, replacing "KEY_PATH" with the path to the private key on your local machine, and restart your shell.
-
-Future Improvements:
-* Support channel and volume jumps of more than one increment
-* Support additional commands (e.g. change input)
